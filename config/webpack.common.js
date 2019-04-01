@@ -89,101 +89,6 @@ module.exports = {
 			test: /\.js$/,
 			exclude: /node_modules/,
 			loader: 'babel-loader'
-		},
-		{
-			test: /\.(woff2?|eot|ttf|otf|woff|svg)?$/,
-			exclude: [/img/, /icons/],
-			use: [{
-				loader: 'file-loader',
-				options: {
-					name: '[name].[ext]',
-					outputPath: 'fonts/',
-					publicPath: '../fonts/',
-				},
-
-			}]
-		},
-		{
-			test: /\.svg$/,
-			exclude: [/img/, /fonts/],
-			use: [{
-				loader: 'svg-sprite-loader',
-				options: {
-					spriteFilename: 'icons.svg',
-					extract: true
-				}
-			},
-			'svg-transform-loader',
-			'svgo-loader'
-			]},
-		{
-			test: /\.svg$/,
-			exclude: [/fonts/, /icons/],
-			use: [{
-				loader: 'file-loader',
-				options: {
-					outputPath: 'img/svg',
-					name: '[name].[ext]',
-				}
-			},
-			{
-				loader: 'svgo-loader',
-				options: {
-					plugins: [{
-						removeTitle: true
-					},
-					{
-						convertColors: {
-							shorthex: false
-						}
-					},
-					{
-						convertPathData: false
-					}]
-				}
-			}]
-		},
-		{
-			test: /\.(mp4|webm|ogg|mp3|wav|flac|aac|ogv)(\?.*)?$/,
-			use: [{
-				loader: 'url-loader',
-				options: {
-					limit: 100000,
-					name: '[name].[ext]',
-					publicPath: resolve('src/videos'),
-					outputPath: 'videos/',
-				}
-			}]
-		},
-		{
-			test: /\.(gif|png|jpe?g)$/i,
-			use: [{
-				loader: 'file-loader',
-				options: {
-					outputPath: 'img/',
-					name: '[ext]/[name].[ext]',
-					// publicPath: '../img/',
-				},
-			},
-			{
-				loader: 'image-webpack-loader',
-				options: {
-					mozjpeg: {
-						progressive: true,
-						quality: 65
-					},
-					optipng: {
-						enabled: false
-					},
-					pngquant: {
-						quality: '65-90',
-						speed: 4
-					},
-					gifsicle: {
-						interlaced: false
-					}
-				}
-			}]
 		}]
 	},
 	plugins: [
@@ -193,7 +98,6 @@ module.exports = {
             }
         ),
 		manifestPlugin,
-		new SpriteLoaderPlugin({ plainSprite: true }),
 		new WebpackNotifierPlugin({
             title: 'Webpack',
             excludeWarnings: true,
