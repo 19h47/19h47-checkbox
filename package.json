@@ -1,6 +1,6 @@
 {
  "name": "@19h47/checkbox",
- "version": "1.0.1",
+ "version": "1.0.2",
  "description": "Custom checkbox element with accessibility in mind",
  "main": "dist/main.js",
  "scripts": {
