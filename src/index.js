@@ -24,8 +24,8 @@ export default class Checkbox {
 
 		this.isActive = this.$element.classList.contains('is-active');
 
-		// Condition
-		const conditionClass = this.$element.getAttribute('data-condition-class');
+		// Condition.
+		const conditionClass = this.$element.getAttribute('data-condition-class') || false;
 		this.conditionalEls = document.querySelectorAll(`.${conditionClass}`) || [];
 
 		this.initEvents();
