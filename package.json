@@ -1,12 +1,12 @@
 {
  "name": "@19h47/checkbox",
- "version": "1.0.0",
+ "version": "1.0.1",
  "description": "Custom checkbox element with accessibility in mind",
  "main": "dist/main.js",
  "scripts": {
   "prod": "node scripts/production.js",
   "dev": "node scripts/development.js",
-  "deploy": "./bin/deploy"
+  "deploy": "npm run prod && npm publish --access=public"
  },
  "repository": {
   "type": "git",
@@ -42,7 +42,6 @@
   "webpack-cli": "^3.3.0",
   "webpack-dev-server": "^3.2.1",
   "webpack-format-messages": "^2.0.5",
-  "webpack-manifest-plugin": "^2.0.4",
   "webpack-merge": "^4.2.1",
   "webpack-notifier": "^1.7.0"
  }

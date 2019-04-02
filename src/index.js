@@ -2,7 +2,7 @@
  * Class Checkbox
  *
  * 	<div class="js-checkbox" data-condition-class="">
- * 		<button type="button"></button>
+ * 		<button role="checkbox" type="button" aria-checked="false"></button>
  * 		<div style="display: none;">
  *			<input id="option_1" name="option_1" value="false" type="checkbox">
  *		</div>
@@ -79,7 +79,10 @@ export default class Checkbox {
 
 		this.isActive = true;
 		this.$element.classList.add('is-active');
+
+		// Button.
 		this.$button.classList.add('is-selected');
+		this.$button.setAttribute('aria-checked', true);
 
 		// Condition.
 		for (let i = 0; i < this.conditionalEls.length; i += 1) {
@@ -103,7 +106,10 @@ export default class Checkbox {
 
 		this.isActive = false;
 		this.$element.classList.remove('is-active');
+
+		// Buttons.
 		this.$button.classList.remove('is-selected');
+		this.$button.setAttribute('aria-checked', false);
 
 		// Condition.
 		for (let i = 0; i < this.conditionalEls.length; i += 1) {

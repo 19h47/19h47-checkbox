@@ -9,8 +9,6 @@ const path = require('path');
 
 // Plugins
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 
 /**
@@ -22,11 +20,6 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 function resolve(dir) {
 	return path.join(__dirname, '..', dir)
 }
-
-// Manifest plugin
-const manifestPlugin = new ManifestPlugin({
-	publicPath: 'dist/'
-});
 
 module.exports = {
 	devServer: {
@@ -97,7 +90,6 @@ module.exports = {
 				verbose: false,
             }
         ),
-		manifestPlugin,
 		new WebpackNotifierPlugin({
             title: 'Webpack',
             excludeWarnings: true,
