@@ -15,7 +15,7 @@
 
 ```javascript
 	const element = document.querySelector('.js-checkbox');
-	const checkbox = new Checkbox('.js-checkbox');
+	const checkbox = new Checkbox(element);
 
 	checkbox.init();
 ```
