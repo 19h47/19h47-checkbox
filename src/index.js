@@ -7,30 +7,40 @@
  *			<input id="option_1" name="option_1" value="false" type="checkbox">
  *		</div>
  *	</div>
+ *
+ *
  * `
  * @param obj element DOM element.
+ * @constructor Checkbox
  * @author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
  */
 export default class Checkbox {
 	constructor(element) {
 		this.$element = element;
+
+		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
+		this.keyCode = Object.freeze({
+			RETURN: 13,
+			SPACE: 32,
+		});
 	}
 
 	init() {
 		if (null === this.$element) return false;
 
-		this.$button = this.$element.querySelector('button');
-		this.$checkbox = this.$element.querySelector('input');
+		this.$input = this.$element.querySelector('input');
 
-		this.isActive = this.$element.classList.contains('is-active');
+		if (!this.$element.getAttribute('aria-checked')) {
+			this.$element.setAttribute('aria-checked', 'false');
+		}
+
+		this.isActive = this.$element.getAttribute('aria-checked');
 
 		// Condition.
 		const conditionClass = this.$element.getAttribute('data-condition-class') || false;
 		this.conditionalEls = document.querySelectorAll(`.${conditionClass}`) || [];
 
-		this.initEvents();
-
-		return true;
+		return this.initEvents();
 	}
 
 
@@ -48,12 +58,43 @@ export default class Checkbox {
 	}
 
 	initEvents() {
+		// Click.
 		this.$element.addEventListener('click', () => {
-			Checkbox.triggerEvent(this.$checkbox, 'change');
+			Checkbox.triggerEvent(this.$input, 'change');
 			this.toggle();
 		});
 
-		if (this.$checkbox.checked) {
+		// Focus.
+		this.$element.addEventListener('focus', () => {
+			this.$element.classList.add('is-focus');
+		});
+
+		// Keydown.
+		this.$element.addEventListener('keydown', (event) => {
+			let flag = false;
+
+			switch (event.keyCode) {
+			case this.keyCode.SPACE:
+				this.toggle();
+				flag = true;
+				break;
+
+			default:
+				break;
+			}
+
+			if (flag) {
+				event.stopPropagation();
+				event.preventDefault();
+			}
+		});
+
+		// Blur.
+		this.$element.addEventListener('blur', () => {
+			this.$element.classList.remove('is-focus');
+		});
+
+		if (this.$input.checked) {
 			this.activate();
 		}
 	}
@@ -63,7 +104,8 @@ export default class Checkbox {
 	 * Checkbox.toggle
 	 */
 	toggle() {
-		if (this.isActive) return this.deactivate();
+		console.log(this.isActive);
+		if ('true' === this.isActive) return this.deactivate();
 
 		return this.activate();
 	}
@@ -75,22 +117,23 @@ export default class Checkbox {
 	 * @return	bool
 	 */
 	activate() {
-		if (this.isActive) return false;
+		if ('true' === this.isActive) return false;
 
-		this.isActive = true;
-		this.$element.classList.add('is-active');
+		this.isActive = 'true';
 
-		// Button.
-		this.$button.classList.add('is-selected');
-		this.$button.setAttribute('aria-checked', true);
+		//
+		this.$element.classList.add('is-selected');
+		this.$element.setAttribute('aria-checked', 'true');
 
 		// Condition.
 		for (let i = 0; i < this.conditionalEls.length; i += 1) {
 			this.conditionalEls[i].classList.remove('is-off');
 		}
 
-		this.$checkbox.value = 'true';
-		this.$checkbox.setAttribute('checked', true);
+		//
+		this.$input.value = 'true';
+		this.$input.checked = true;
+		this.$input.setAttribute('checked', 'true');
 
 		return true;
 	}
@@ -102,22 +145,23 @@ export default class Checkbox {
 	 * @return	bool
 	 */
 	deactivate() {
-		if (!this.isActive) return false;
+		if ('false' === !this.isActive) return false;
 
-		this.isActive = false;
-		this.$element.classList.remove('is-active');
+		this.isActive = 'false';
 
-		// Buttons.
-		this.$button.classList.remove('is-selected');
-		this.$button.setAttribute('aria-checked', false);
+		//
+		this.$element.classList.remove('is-selected');
+		this.$element.setAttribute('aria-checked', 'false');
 
 		// Condition.
 		for (let i = 0; i < this.conditionalEls.length; i += 1) {
 			this.conditionalEls[i].classList.add('is-off');
 		}
 
-		this.$checkbox.value = 'false';
-		this.$checkbox.removeAttribute('checked');
+		//
+		this.$input.value = 'false';
+		this.$input.checked = false;
+		this.$input.removeAttribute('checked');
 
 		return true;
 	}
