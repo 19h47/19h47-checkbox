@@ -128,6 +128,8 @@ export default class Checkbox {
 		// Condition.
 		for (let i = 0; i < this.conditionalEls.length; i += 1) {
 			this.conditionalEls[i].classList.remove('is-off');
+			this.conditionalEls[i].setAttribute('tabIndex', 0);
+			this.conditionalEls[i].removeAttribute('disabled');
 		}
 
 		//
@@ -156,6 +158,7 @@ export default class Checkbox {
 		// Condition.
 		for (let i = 0; i < this.conditionalEls.length; i += 1) {
 			this.conditionalEls[i].classList.add('is-off');
+			this.conditionalEls[i].setAttribute('tabIndex', -1);
 		}
 
 		//
