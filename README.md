@@ -3,8 +3,8 @@
 ## HTML
 
 ```html
-	<div class="js-checkbox" data-condition-class="">
-		<button role="checkbox" type="button" aria-checked="false"></button>
+	<div class="js-checkbox" role="checkbox" data-condition-class="" aria-checked="false">
+		<button type="button"></button>
 		<div style="display: none;">
 			<input id="option" name="option" value="false" type="checkbox">
 		</div>
