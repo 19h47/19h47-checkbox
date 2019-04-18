@@ -104,7 +104,7 @@ export default class Checkbox {
 	 * Checkbox.toggle
 	 */
 	toggle() {
-		console.log(this.isActive);
+		// console.log(this.isActive);
 		if ('true' === this.isActive) return this.deactivate();
 
 		return this.activate();
