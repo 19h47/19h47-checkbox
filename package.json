@@ -4,10 +4,10 @@
     "description": "Custom checkbox element with accessibility in mind",
     "main": "dist/main.js",
     "scripts": {
-        "prod": "node scripts/production.js",
-        "dev": "node scripts/development.js",
-        "deploy": "npm run prod && npm publish --access=public",
-        "start": "NODE_ENV=development webpack-dev-server --hot --mode development"
+        "prod": "./bin/production",
+        "dev": "./bin/development",
+        "deploy": "./bin/deploy",
+        "start": "./bin/start"
     },
     "repository": {
         "type": "git",

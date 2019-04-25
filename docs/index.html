@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Checkbox</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+		<style>
+			.Form__checkbox {}
+			.Form__checkbox button {
+				width: 1.5rem;
+				height: 1.5rem;
+				position: relative;
+				border: 1px solid black;
+			}
+
+			.Form__checkbox button::after {
+				display: block;
+				position: absolute;
+			    top: 0;
+			    right: 0;
+			    bottom: 0;
+			    left: 0;
+			    margin: 3px;
+				content: '';
+			}
+
+			.Form__checkbox.is-selected button:after {
+	    		background-color: black;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h1 class="my-5">
+						<a href="">Checkbox</a>
+					</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+
+					<h3 id="sandwich-condiments">Sandwich Condiments</h3>
+
+					<div role="group" aria-labelledby="sandwich-condiments">
+
+						<div class="Form__checkbox my-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false">
+					 		<button class="mr-3" type="button" tabindex="-1"></button>Lettuce
+					 		<div class="d-none">
+								<input id="Lettuce" name="Lettuce" value="Lettuce" type="checkbox">
+							</div>
+						</div>
+
+						<div class="Form__checkbox my-3 align-items-center d-flex js-checkbox is-selected" tabindex="0" role="checkbox" aria-checked="true">
+					 		<button class="mr-3 is-selected" type="button" tabindex="-1"></button>Tomato
+					 		<div class="d-none">
+								<input id="Tomato" name="Tomato" value="Tomato" type="checkbox" checked="true">
+							</div>
+						</div>
+
+						<div class="Form__checkbox my-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false">
+					 		<button class="mr-3" type="button" tabindex="-1"></button>Mustard
+					 		<div class="d-none">
+								<input id="Mustard" name="Mustard" value="Mustard" type="checkbox">
+							</div>
+						</div>
+
+						<div class="Form__checkbox my-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false">
+					 		<button class="mr-3" type="button" tabindex="-1"></button>Sprouts
+					 		<div class="d-none">
+								<input id="Sprouts" name="Sprouts" value="Sprouts" type="checkbox">
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="dist/main.js"></script>
+		<script type="text/javascript">
+			const elements = document.querySelectorAll('.js-checkbox');
+
+			for (let i = 0; i < elements.length; i++) {
+				const checkbox = new Checkbox.default(elements[i]);
+
+				checkbox.init();
+			}
+		</script>
+	</body>
+</html>
