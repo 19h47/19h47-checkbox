@@ -9,7 +9,10 @@ const path = require('path');
 
 // Plugins
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+<<<<<<< HEAD
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+=======
+>>>>>>> 95a4568d5a776b1abf47827ae0a7db65b6773ebb
 const WebpackNotifierPlugin = require('webpack-notifier');
 
 /**
@@ -23,10 +26,13 @@ function resolve(dir) {
 }
 
 module.exports = {
+<<<<<<< HEAD
 	entry: {
 		dist: resolve('src/index.js'),
 		docs: resolve('src/index.js')
 	},
+=======
+>>>>>>> 95a4568d5a776b1abf47827ae0a7db65b6773ebb
 	devServer: {
 		contentBase: resolve('dist'),
 		compress: true,
@@ -36,8 +42,12 @@ module.exports = {
 	output: {
 		library: 'Checkbox',
 		libraryTarget: 'umd',
+<<<<<<< HEAD
 		path: resolve(''),
 		filename: '[name]/main.js'
+=======
+		filename: '../main.js'
+>>>>>>> 95a4568d5a776b1abf47827ae0a7db65b6773ebb
 	},
 	resolve: {
 		alias: {
@@ -91,6 +101,7 @@ module.exports = {
 		}]
 	},
 	plugins: [
+<<<<<<< HEAD
 		new CleanWebpackPlugin(
 			['dist', 'docs'],
 			{
@@ -102,6 +113,13 @@ module.exports = {
 			template: resolve('index.html'),
 			inject: false,
 		}),
+=======
+        new CleanWebpackPlugin({
+                root: resolve(''),
+				verbose: false,
+            }
+        ),
+>>>>>>> 95a4568d5a776b1abf47827ae0a7db65b6773ebb
 		new WebpackNotifierPlugin({
             title: 'Webpack',
             excludeWarnings: true,
