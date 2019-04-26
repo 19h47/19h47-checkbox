@@ -35,6 +35,7 @@ export default class Checkbox {
 		}
 
 		this.isActive = this.$element.getAttribute('aria-checked');
+		this.event = new Event('change');
 
 		// Condition.
 		const conditionClass = this.$element.getAttribute('data-condition-class') || false;
@@ -74,13 +75,14 @@ export default class Checkbox {
 			let flag = false;
 
 			switch (event.keyCode) {
-			case this.keyCode.SPACE:
-				this.toggle();
-				flag = true;
-				break;
+				case this.keyCode.SPACE:
+					this.$input.dispatchEvent(this.event);
+					this.toggle();
+					flag = true;
+					break;
 
-			default:
-				break;
+				default:
+					break;
 			}
 
 			if (flag) {
