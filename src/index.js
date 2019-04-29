@@ -134,8 +134,6 @@ export default class Checkbox {
 			this.conditionalEls[i].removeAttribute('disabled');
 		}
 
-		//
-		this.$input.value = 'true';
 		this.$input.checked = true;
 		this.$input.setAttribute('checked', 'true');
 
@@ -164,7 +162,6 @@ export default class Checkbox {
 		}
 
 		//
-		this.$input.value = 'false';
 		this.$input.checked = false;
 		this.$input.removeAttribute('checked');
 
