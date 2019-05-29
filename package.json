@@ -1,6 +1,6 @@
 {
     "name": "@19h47/checkbox",
-    "version": "1.0.12",
+    "version": "2.0.0",
     "description": "Custom checkbox element with accessibility in mind",
     "main": "dist/main.js",
     "scripts": {
@@ -46,5 +46,8 @@
         "webpack-format-messages": "^2.0.5",
         "webpack-merge": "^4.2.1",
         "webpack-notifier": "^1.7.0"
+    },
+    "dependencies": {
+        "@19h47/keycode": "^1.0.1"
     }
 }

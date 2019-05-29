@@ -1,3 +1,5 @@
+import { SPACE } from '@19h47/keycode';
+
 /**
  * Class Checkbox
  *
@@ -17,12 +19,6 @@
 export default class Checkbox {
 	constructor(element) {
 		this.$element = element;
-
-		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
-		this.keyCode = Object.freeze({
-			RETURN: 13,
-			SPACE: 32,
-		});
 	}
 
 	init() {
@@ -75,7 +71,7 @@ export default class Checkbox {
 			let flag = false;
 
 			switch (event.keyCode) {
-				case this.keyCode.SPACE:
+				case SPACE:
 					this.$input.dispatchEvent(this.event);
 					this.toggle();
 					flag = true;
