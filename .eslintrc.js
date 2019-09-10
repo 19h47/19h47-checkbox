@@ -26,9 +26,9 @@ module.exports = {
   		allowImportExportEverywhere: true
 	},
 	settings: {
-		'import/resolver': {
-			'webpack': {
-				'config': 'config/webpack.common.js'
+		"import/resolver": {
+			webpack: {
+				config: 'config/webpack.common.js'
 			},
 		}
 	},
