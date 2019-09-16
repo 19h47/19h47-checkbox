@@ -30,7 +30,7 @@ export default class Checkbox {
 			this.$element.setAttribute('aria-checked', 'false');
 		}
 
-		this.isActive = this.$element.getAttribute('aria-checked');
+		this.isActive = JSON.parse(this.$element.getAttribute('aria-checked'));
 		this.event = new Event('change');
 
 		// Condition.
@@ -44,8 +44,8 @@ export default class Checkbox {
 	/**
 	 * Trigger event
 	 *
-	 * @param  obj element
-	 * @param  str name Event name
+	 * @param  {obj} element
+	 * @param  {str} name Event name
 	 * @return
 	 */
 	static triggerEvent(element, name) {
@@ -103,7 +103,7 @@ export default class Checkbox {
 	 */
 	toggle() {
 		// console.log(this.isActive);
-		if ('true' === this.isActive) return this.deactivate();
+		if (this.isActive) return this.deactivate();
 
 		return this.activate();
 	}
@@ -115,13 +115,13 @@ export default class Checkbox {
 	 * @return	bool
 	 */
 	activate() {
-		if ('true' === this.isActive) return false;
+		if (this.isActive) return false;
 
-		this.isActive = 'true';
+		this.isActive = true;
 
 		//
 		this.$element.classList.add('is-selected');
-		this.$element.setAttribute('aria-checked', 'true');
+		this.$element.setAttribute('aria-checked', true);
 
 		// Condition.
 		for (let i = 0; i < this.conditionalEls.length; i += 1) {
@@ -131,7 +131,7 @@ export default class Checkbox {
 		}
 
 		this.$input.checked = true;
-		this.$input.setAttribute('checked', 'true');
+		this.$input.setAttribute('checked', true);
 
 		return true;
 	}
@@ -143,9 +143,9 @@ export default class Checkbox {
 	 * @return	bool
 	 */
 	deactivate() {
-		if ('false' === !this.isActive) return false;
+		if (!this.isActive) return false;
 
-		this.isActive = 'false';
+		this.isActive = false;
 
 		//
 		this.$element.classList.remove('is-selected');
