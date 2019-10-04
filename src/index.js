@@ -3,16 +3,7 @@ import { SPACE } from '@19h47/keycode';
 /**
  * Class Checkbox
  *
- * 	<div class="js-checkbox" data-condition-class="">
- * 		<button role="checkbox" type="button" aria-checked="false"></button>
- * 		<div style="display: none;">
- *			<input id="option_1" name="option_1" value="false" type="checkbox">
- *		</div>
- *	</div>
- *
- *
- * `
- * @param obj element DOM element.
+ * @param {object} element DOM element.
  * @constructor Checkbox
  * @author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
  */
@@ -25,13 +16,12 @@ export default class Checkbox {
 		if (null === this.$element) return false;
 
 		this.$input = this.$element.querySelector('input');
-
-		if (!this.$element.getAttribute('aria-checked')) {
-			this.$element.setAttribute('aria-checked', 'false');
-		}
-
 		this.isActive = JSON.parse(this.$element.getAttribute('aria-checked'));
 		this.event = new Event('change');
+
+		if (!this.isActive) {
+			this.$element.setAttribute('aria-checked', false);
+		}
 
 		// Condition.
 		const conditionClass = this.$element.getAttribute('data-condition-class') || false;
@@ -44,8 +34,8 @@ export default class Checkbox {
 	/**
 	 * Trigger event
 	 *
-	 * @param  {obj} element
-	 * @param  {str} name Event name
+	 * @param  {object} element
+	 * @param  {string} name Event name
 	 * @return
 	 */
 	static triggerEvent(element, name) {
@@ -68,23 +58,20 @@ export default class Checkbox {
 
 		// Keydown.
 		this.$element.addEventListener('keydown', (event) => {
-			let flag = false;
+			const key = event.keyCode;
 
-			switch (event.keyCode) {
-				case SPACE:
+			const codes = {
+				[SPACE]: () => {
 					this.$input.dispatchEvent(this.event);
 					this.toggle();
-					flag = true;
-					break;
 
-				default:
-					break;
-			}
+					event.stopPropagation();
+					event.preventDefault();
+				},
+				default: () => false,
+			};
 
-			if (flag) {
-				event.stopPropagation();
-				event.preventDefault();
-			}
+			return (codes[key] || codes.default)();
 		});
 
 		// Blur.
@@ -149,7 +136,7 @@ export default class Checkbox {
 
 		//
 		this.$element.classList.remove('is-selected');
-		this.$element.setAttribute('aria-checked', 'false');
+		this.$element.setAttribute('aria-checked', false);
 
 		// Condition.
 		for (let i = 0; i < this.conditionalEls.length; i += 1) {
