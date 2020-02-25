@@ -5,7 +5,7 @@ import { SPACE } from '@19h47/keycode';
  *
  * @param {object} element DOM element.
  * @constructor Checkbox
- * @author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
+ * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
  */
 export default class Checkbox {
 	constructor(element) {
@@ -34,7 +34,7 @@ export default class Checkbox {
 	/**
 	 * Trigger event
 	 *
-	 * @param  {object} element
+	 * @param  {Object} element
 	 * @param  {string} name Event name
 	 * @return
 	 */
@@ -127,7 +127,7 @@ export default class Checkbox {
 	/**
 	 * Checkbox.deactivate
 	 *
-	 * @return	bool
+	 * @return	{boolean}
 	 */
 	deactivate() {
 		if (!this.isActive) return false;
