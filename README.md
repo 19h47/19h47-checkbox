@@ -1,5 +1,11 @@
 # @19h47/checkbox
 
+## Install
+
+```
+yarn add @19h47/checkbox
+```
+
 ## HTML
 
 ```html
