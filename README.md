@@ -20,8 +20,10 @@ yarn add @19h47/checkbox
 ## JavaScript
 
 ```javascript
-	const element = document.querySelector('.js-checkbox');
-	const checkbox = new Checkbox(element);
+	import Checkbox from '@19h47/checkbox';
+	
+	const $element = document.querySelector('.js-checkbox');
+	const checkbox = new Checkbox($element);
 
 	checkbox.init();
 ```
