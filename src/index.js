@@ -1,6 +1,15 @@
 import { SPACE } from '@19h47/keycode';
 
 /**
+ * Trigger event
+ *
+ * @param  {Object} element
+ * @param  {string} name Event name
+ * @return
+ */
+const triggerEvent = (element, name) => element.dispatchEvent(new Event(name));
+
+/**
  * Class Checkbox
  *
  * @param {object} element DOM element.
@@ -17,7 +26,6 @@ export default class Checkbox {
 
 		this.$input = this.$element.querySelector('input');
 		this.isActive = JSON.parse(this.$element.getAttribute('aria-checked'));
-		this.event = new Event('change');
 
 		if (!this.isActive) {
 			this.$element.setAttribute('aria-checked', false);
@@ -30,25 +38,11 @@ export default class Checkbox {
 		return this.initEvents();
 	}
 
-
-	/**
-	 * Trigger event
-	 *
-	 * @param  {Object} element
-	 * @param  {string} name Event name
-	 * @return
-	 */
-	static triggerEvent(element, name) {
-		const event = new Event(name);
-
-		return element.dispatchEvent(event);
-	}
-
 	initEvents() {
 		// Click.
 		this.$element.addEventListener('click', () => {
-			Checkbox.triggerEvent(this.$input, 'change');
 			this.toggle();
+			triggerEvent(this.$input, 'change');
 		});
 
 		// Focus.
@@ -57,13 +51,13 @@ export default class Checkbox {
 		});
 
 		// Keydown.
-		this.$element.addEventListener('keydown', (event) => {
+		this.$element.addEventListener('keydown', event => {
 			const key = event.keyCode;
 
 			const codes = {
 				[SPACE]: () => {
-					this.$input.dispatchEvent(this.event);
 					this.toggle();
+					triggerEvent(this.$input, 'change');
 
 					event.stopPropagation();
 					event.preventDefault();
@@ -84,7 +78,6 @@ export default class Checkbox {
 		}
 	}
 
-
 	/**
 	 * Checkbox.toggle
 	 */
@@ -95,14 +88,15 @@ export default class Checkbox {
 		return this.activate();
 	}
 
-
 	/**
 	 * Checkbox.activate
 	 *
 	 * @return	bool
 	 */
 	activate() {
-		if (this.isActive) return false;
+		if (this.isActive) {
+			return false;
+		}
 
 		this.isActive = true;
 
@@ -123,14 +117,15 @@ export default class Checkbox {
 		return true;
 	}
 
-
 	/**
 	 * Checkbox.deactivate
 	 *
 	 * @return	{boolean}
 	 */
 	deactivate() {
-		if (!this.isActive) return false;
+		if (!this.isActive) {
+			return false;
+		}
 
 		this.isActive = false;
 
