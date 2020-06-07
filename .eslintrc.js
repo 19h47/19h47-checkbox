@@ -7,7 +7,7 @@ module.exports = {
 	extends: ['standard', 'airbnb-base', 'prettier'],
 	rules: {
 		'no-console': 'off',
-		'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+		'no-debugger': 'production' === process.env.NODE_ENV ? 'error' : 'off',
 		'no-tabs': 0,
 		indent: ['error', 'tab', { SwitchCase: 1 }],
 		'no-param-reassign': [
