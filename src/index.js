@@ -9,6 +9,9 @@ import { SPACE } from '@19h47/keycode';
  */
 const triggerEvent = (element, name) => element.dispatchEvent(new Event(name));
 
+const focus = target => target.classList.add('is-focus');
+const blur = target => target.classList.remove('is-focus');
+
 /**
  * Class Checkbox
  *
@@ -31,10 +34,6 @@ export default class Checkbox {
 			this.$element.setAttribute('aria-checked', false);
 		}
 
-		// Condition.
-		const conditionClass = this.$element.getAttribute('data-condition-class') || false;
-		this.conditionalEls = document.querySelectorAll(`.${conditionClass}`) || [];
-
 		return this.initEvents();
 	}
 
@@ -47,7 +46,7 @@ export default class Checkbox {
 
 		// Focus.
 		this.$element.addEventListener('focus', () => {
-			this.$element.classList.add('is-focus');
+			focus(this.$element);
 		});
 
 		// Keydown.
@@ -70,7 +69,7 @@ export default class Checkbox {
 
 		// Blur.
 		this.$element.addEventListener('blur', () => {
-			this.$element.classList.remove('is-focus');
+			blur(this.$element);
 		});
 
 		if (this.$input.checked) {
@@ -104,15 +103,10 @@ export default class Checkbox {
 		this.$element.classList.add('is-selected');
 		this.$element.setAttribute('aria-checked', true);
 
-		// Condition.
-		for (let i = 0; i < this.conditionalEls.length; i += 1) {
-			this.conditionalEls[i].classList.remove('is-off');
-			this.conditionalEls[i].setAttribute('tabIndex', 0);
-			this.conditionalEls[i].removeAttribute('disabled');
-		}
-
 		this.$input.checked = true;
 		this.$input.setAttribute('checked', true);
+
+		triggerEvent(this.$input, 'activate');
 
 		return true;
 	}
@@ -133,15 +127,11 @@ export default class Checkbox {
 		this.$element.classList.remove('is-selected');
 		this.$element.setAttribute('aria-checked', false);
 
-		// Condition.
-		for (let i = 0; i < this.conditionalEls.length; i += 1) {
-			this.conditionalEls[i].classList.add('is-off');
-			this.conditionalEls[i].setAttribute('tabIndex', -1);
-		}
-
 		//
 		this.$input.checked = false;
 		this.$input.removeAttribute('checked');
+
+		triggerEvent(this.$input, 'deactivate');
 
 		return true;
 	}

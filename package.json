@@ -1,6 +1,6 @@
 {
 	"name": "@19h47/checkbox",
-	"version": "3.0.2",
+	"version": "4.0.0",
 	"description": "Custom checkbox element with accessibility in mind",
 	"main": "dist/main.js",
 	"scripts": {
@@ -26,7 +26,7 @@
 	"devDependencies": {
 		"@19h47/prettier-config": "^1.0.0",
 		"@babel/core": "^7.8.7",
-		"@babel/plugin-transform-runtime": "^7.8.3",
+		"@babel/plugin-transform-runtime": "^7.10.1",
 		"@babel/preset-env": "^7.8.7",
 		"@babel/runtime": "^7.8.7",
 		"babel-eslint": "^10.1.0",
@@ -39,7 +39,7 @@
 		"eslint-config-standard": "^14.1.0",
 		"eslint-import-resolver-webpack": "^0.12.1",
 		"eslint-loader": "^4.0.2",
-		"eslint-plugin-import": "^2.20.0",
+		"eslint-plugin-import": "^2.21.2",
 		"eslint-plugin-node": "^11.0.0",
 		"eslint-plugin-promise": "^4.2.1",
 		"eslint-plugin-standard": "^4.0.1",
