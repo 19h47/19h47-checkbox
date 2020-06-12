@@ -3,7 +3,7 @@ import { SPACE } from '@19h47/keycode';
 /**
  * Trigger event
  *
- * @param  {Object} element
+ * @param  {object} element
  * @param  {string} name Event name
  * @return
  */
@@ -21,87 +21,81 @@ const blur = target => target.classList.remove('is-focus');
  */
 export default class Checkbox {
 	constructor(element) {
-		this.$element = element;
+		this.rootElement = element;
+
+		this.onClick = this.onClick.bind(this);
+		this.onKeydown = this.onKeydown.bind(this);
 	}
 
 	init() {
-		if (null === this.$element) return false;
+		if (null === this.rootElement) return false;
 
-		this.$input = this.$element.querySelector('input');
-		this.isActive = JSON.parse(this.$element.getAttribute('aria-checked'));
+		this.$input = this.rootElement.querySelector('input');
+		this.checked = JSON.parse(this.rootElement.getAttribute('aria-checked'));
 
-		if (!this.isActive) {
-			this.$element.setAttribute('aria-checked', false);
+		if (!this.checked) {
+			this.rootElement.setAttribute('aria-checked', false);
+		}
+
+		if (this.$input.checked) {
+			this.activate();
 		}
 
 		return this.initEvents();
 	}
 
 	initEvents() {
-		// Click.
-		this.$element.addEventListener('click', () => {
-			this.toggle();
-			triggerEvent(this.$input, 'change');
-		});
-
-		// Focus.
-		this.$element.addEventListener('focus', () => {
-			focus(this.$element);
-		});
-
-		// Keydown.
-		this.$element.addEventListener('keydown', event => {
-			const key = event.keyCode;
-
-			const codes = {
-				[SPACE]: () => {
-					this.toggle();
-					triggerEvent(this.$input, 'change');
-
-					event.stopPropagation();
-					event.preventDefault();
-				},
-				default: () => false,
-			};
-
-			return (codes[key] || codes.default)();
-		});
-
-		// Blur.
-		this.$element.addEventListener('blur', () => {
-			blur(this.$element);
-		});
-
-		if (this.$input.checked) {
-			this.activate();
-		}
+		this.rootElement.addEventListener('keydown', this.onKeydown);
+		this.rootElement.addEventListener('click', this.onClick);
+		this.rootElement.addEventListener('blur', () => blur(this.rootElement));
+		this.rootElement.addEventListener('focus', () => focus(this.rootElement));
 	}
 
-	/**
-	 * Checkbox.toggle
-	 */
-	toggle() {
-		// console.log(this.isActive);
-		if (this.isActive) return this.deactivate();
+	onClick() {
+		this.toggle();
+	}
 
-		return this.activate();
+	onKeydown(event) {
+		const key = event.keyCode;
+
+		const codes = {
+			[SPACE]: () => {
+				this.toggle();
+
+				event.stopPropagation();
+				event.preventDefault();
+			},
+			default: () => false,
+		};
+
+		return (codes[key] || codes.default)();
+	}
+
+	toggle() {
+		if (this.checked) {
+			this.deactivate();
+			return triggerEvent(this.$input, 'change');
+		}
+
+		this.activate();
+		return triggerEvent(this.$input, 'change');
 	}
 
 	/**
 	 * Checkbox.activate
 	 *
-	 * @return	bool
+	 * @return	{boolean}
 	 */
 	activate() {
-		if (this.isActive) {
+		if (this.checked) {
 			return false;
 		}
 
-		this.isActive = true;
+		this.checked = true;
 
 		//
-		this.$element.classList.add('is-selected');
-		this.$element.setAttribute('aria-checked', true);
+		this.rootElement.classList.add('is-selected');
+		this.rootElement.setAttribute('aria-checked', true);
 
 		this.$input.checked = true;
 		this.$input.setAttribute('checked', true);
@@ -117,15 +111,15 @@ export default class Checkbox {
 	 * @return	{boolean}
 	 */
 	deactivate() {
-		if (!this.isActive) {
+		if (!this.checked) {
 			return false;
 		}
 
-		this.isActive = false;
+		this.checked = false;
 
 		//
-		this.$element.classList.remove('is-selected');
-		this.$element.setAttribute('aria-checked', false);
+		this.rootElement.classList.remove('is-selected');
+		this.rootElement.setAttribute('aria-checked', false);
 
 		//
 		this.$input.checked = false;
