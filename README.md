@@ -9,31 +9,31 @@ yarn add @19h47/checkbox
 ## HTML
 
 ```html
-	<div class="js-checkbox" role="checkbox" data-condition-class="" aria-checked="false">
-		<button type="button" tabindex="-1">Do you want to click me?</button>
-		<div style="display: none;">
-			<input id="option" name="option" value="false" type="checkbox">
-		</div>
+<div class="js-checkbox" role="checkbox" data-condition-class="" aria-checked="false">
+	<button type="button" tabindex="-1">Do you want to click me?</button>
+	<div style="display: none;">
+		<input id="option" name="option" value="false" type="checkbox" />
 	</div>
+</div>
 ```
 
 ## JavaScript
 
 ```javascript
-	import Checkbox from '@19h47/checkbox';
-	
-	const $element = document.querySelector('.js-checkbox');
-	const checkbox = new Checkbox($element);
+import Checkbox from '@19h47/checkbox';
 
-	checkbox.init();
+const $element = document.querySelector('.js-checkbox');
+const checkbox = new Checkbox($element);
+
+checkbox.init();
 ```
 
 ## Keyboard Support
 
-Key   | Function
------ | -------
-Tab   | Moves keyboard focus to the `checkbox`.
-Space |	Toggles checkbox between checked and unchecked states.
+| Key   | Function                                               |
+| ----- | ------------------------------------------------------ |
+| Tab   | Moves keyboard focus to the `checkbox`.                |
+| Space | Toggles checkbox between checked and unchecked states. |
 
 ## Role, Property, State, and Tabindex Attributes
 
@@ -77,4 +77,4 @@ An example is located right [here](https://19h47.github.io/19h47-checkbox/), see
 
 ## Acknowledgments
 
-- [Checkbox Example](https://www.w3.org/TR/wai-aria-practices/examples/checkbox/checkbox-2/checkbox-2.html)
+-   [Checkbox Example](https://www.w3.org/TR/wai-aria-practices/examples/checkbox/checkbox-2/checkbox-2.html)
