@@ -215,9 +215,9 @@
 
 					if ('Tomato' === value) {
 						tomatoes.forEach(tomato => {
-							tomato.$element.classList.remove('is-off');
-							tomato.$element.setAttribute('tabIndex', 0);
-							tomato.$element.removeAttribute('disabled');
+							tomato.rootElement.classList.remove('is-off');
+							tomato.rootElement.setAttribute('tabIndex', 0);
+							tomato.rootElement.removeAttribute('disabled');
 							tomato.activate();
 						});
 					}
@@ -230,8 +230,8 @@
 
 					if ('Tomato' === value) {
 						tomatoes.forEach(tomato => {
-							tomato.$element.classList.add('is-off');
-							tomato.$element.setAttribute('tabIndex', -1);
+							tomato.rootElement.classList.add('is-off');
+							tomato.rootElement.setAttribute('tabIndex', -1);
 							tomato.deactivate();
 						});
 					}
