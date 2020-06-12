@@ -1,4 +1,14 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta http-equiv="X-UA-Compatible" content="ie=edge"/><title>Checkbox</title><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/><style>.Form__checkbox {
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Checkbox</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+		<style>
+			.Form__checkbox {
 			}
 			.Form__checkbox button {
 				width: 1.5rem;
@@ -25,7 +35,83 @@
 			.Form__checkbox.is-off {
 				opacity: 0.3;
 				pointer-events: none;
-			}</style></head><body><div class="container"><div class="row"><div class="col-12 my-5"><h1 class="m-0"><a href="https://github.com/19h47/19h47-checkbox">Checkbox<sup class="js-value">Mustard</sup></a></h1></div><div class="col-12 my-5"><div class="border p-3"><legend id="sandwich-condiments">Sandwich Condiments</legend><div role="group" aria-labelledby="sandwich-condiments"><div class="Form__checkbox m-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false"><button class="mr-3" type="button" tabindex="-1"></button>Lettuce<div class="d-none"><input id="lettuce" name="lettuce" value="Lettuce" type="checkbox"/></div></div><div class="Form__checkbox m-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false"><button class="mr-3" type="button" tabindex="-1"></button>Tomato<div class="d-none"><input id="tomato" name="tomato" value="Tomato" type="checkbox"/></div></div><fieldset class="border"><div class="Form__checkbox m-3 align-items-center d-flex js-checkbox js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false"><button class="mr-3" type="button" tabindex="-1"></button>Roma<div class="d-none"><input id="roma" name="roma" value="Roma" type="checkbox"/></div></div><div class="Form__checkbox m-3 align-items-center d-flex js-checkbox js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false"><button class="mr-3" type="button" tabindex="-1"></button>Monterosa<div class="d-none"><input id="monterosa" name="monterosa" value="Monterosa" type="checkbox"/></div></div><div class="Form__checkbox m-3 align-items-center d-flex js-checkbox js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false"><button class="mr-3" type="button" tabindex="-1"></button>Beefsteak<div class="d-none"><input id="beefsteak" name="beefsteak" value="Beefsteak" type="checkbox"/></div></div></fieldset><div class="Form__checkbox m-3 align-items-center d-flex js-checkbox is-selected" tabindex="0" role="checkbox" aria-checked="true"><button class="mr-3 is-selected" type="button" tabindex="-1"></button>Mustard<div class="d-none"><input id="mustard" name="mustard" value="Mustard" type="checkbox" checked="checked"/></div></div><div class="Form__checkbox m-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false"><button class="mr-3" type="button" tabindex="-1"></button><div>Sprouts</div><div class="d-none"><input id="sprouts" name="sprouts" value="Sprouts" type="checkbox"/></div></div></div></div></div></div></div><script src="main.js"></script><script>const elements = document.querySelectorAll('.js-checkbox');
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 my-5">
+					<h1 class="m-0">
+						<a href="https://github.com/19h47/19h47-checkbox">Checkbox<sup class="js-value">Mustard</sup></a>
+					</h1>
+				</div>
+
+				<div class="col-12 my-5">
+					<div class="border p-3">
+						<legend id="sandwich-condiments">Sandwich Condiments</legend>
+
+						<div role="group" aria-labelledby="sandwich-condiments">
+							<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>Lettuce
+								<div class="d-none">
+									<input id="lettuce" name="lettuce" value="Lettuce" type="checkbox">
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>Tomato
+								<div class="d-none">
+									<input id="tomato" name="tomato" value="Tomato" type="checkbox">
+								</div>
+							</div>
+
+							<fieldset class="border">
+								<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false">
+									<button class="mr-3" type="button" tabindex="-1"></button>Roma
+									<div class="d-none">
+										<input id="roma" name="roma" value="Roma" type="checkbox">
+									</div>
+								</div>
+
+								<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false">
+									<button class="mr-3" type="button" tabindex="-1"></button>Monterosa
+									<div class="d-none">
+										<input id="monterosa" name="monterosa" value="Monterosa" type="checkbox">
+									</div>
+								</div>
+
+								<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false">
+									<button class="mr-3" type="button" tabindex="-1"></button>Beefsteak
+									<div class="d-none">
+										<input id="beefsteak" name="beefsteak" value="Beefsteak" type="checkbox">
+									</div>
+								</div>
+							</fieldset>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox is-selected" tabindex="0" role="checkbox" aria-checked="true">
+								<button class="mr-3 is-selected" type="button" tabindex="-1"></button>Mustard
+								<div class="d-none">
+									<input id="mustard" name="mustard" value="Mustard" type="checkbox" checked="checked">
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								<div>Sprouts</div>
+								<div class="d-none">
+									<input id="sprouts" name="sprouts" value="Sprouts" type="checkbox">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="main.js"></script>
+		<script>
+			const elements = document.querySelectorAll('.js-checkbox');
 			const $value = document.querySelector('.js-value');
 			const tomatoes = [];
 
@@ -69,4 +155,7 @@
 						});
 					}
 				});
-			}</script></body></html>
+			}
+		</script>
+	</body>
+</html>
