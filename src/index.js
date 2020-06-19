@@ -74,10 +74,10 @@ export default class Checkbox {
 	toggle() {
 		if (this.checked) {
 			this.deactivate();
-			return triggerEvent(this.$input, 'change');
+		} else {
+			this.activate();
 		}
 
-		this.activate();
 		return triggerEvent(this.$input, 'change');
 	}
 
