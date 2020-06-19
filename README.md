@@ -91,6 +91,6 @@ checkbox.$input.addEventListener('deactivate', event => {
 
 An example is located right [here](https://19h47.github.io/19h47-checkbox/), see [sources](https://github.com/19h47/19h47-checkbox/blob/master/index.html).
 
-## Acknowledgments
+## References
 
 -   [Checkbox Example](https://www.w3.org/TR/wai-aria-practices/examples/checkbox/checkbox-2/checkbox-2.html)
