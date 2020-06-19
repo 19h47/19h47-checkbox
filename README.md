@@ -9,7 +9,7 @@ yarn add @19h47/checkbox
 ## HTML
 
 ```html
-<div class="js-checkbox" role="checkbox" data-condition-class="" aria-checked="false">
+<div role="checkbox" aria-checked="false">
 	<button type="button" tabindex="-1">Do you want to click me?</button>
 	<div style="display: none;">
 		<input id="option" name="option" value="false" type="checkbox" />
@@ -22,8 +22,8 @@ yarn add @19h47/checkbox
 ```javascript
 import Checkbox from '@19h47/checkbox';
 
-const $element = document.querySelector('.js-checkbox');
-const checkbox = new Checkbox($element);
+const $checkbox = document.querySelector('[role="checkbox"]');
+const checkbox = new Checkbox($checkbox);
 
 checkbox.init();
 ```
@@ -37,43 +37,59 @@ checkbox.init();
 
 ## Role, Property, State, and Tabindex Attributes
 
-### h3
-
-Provides a grouping label for the group of checkboxes.
-
-### group
-
-Identifies the div element as a group container for the checkboxes.
-
-The `aria-labelledby` attribute references the id attribute of the `h3` element to define the accessible name for the group of checkboxes.
-
-### checkbox
-
-Identifies the `div` element as a `checkbox`.
-
-The child text content of this `div` provides the accessible name of the checkbox.
+| Role       | Attribute              | Element | Usage                                                                                                                                                    |
+| ---------- | ---------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|            |                        | `h3`    | Provides a grouping label for the group of checkboxes.                                                                                                   |
+| `group`    |                        | `div`   | Identifies the div element as a group container for the checkboxes.                                                                                      |
+|            | `aria-labelledby`      | `div`   | The `aria-labelledby` attribute references the id attribute of the `h3` element to define the accessible name for the group of checkboxes.</li></ul>     |
+| `checkbox` |                        | `div`   | <ul><li>Identifies the `div` element as a `checkbox`.</li><li>The child text content of this div provides the accessible name of the checkbox.</li></ul> |
+|            | `tabindex="0"`         | `div`   | Includes the checkbox in the page tab sequence.                                                                                                          |
+|            | `aria-checked="false"` | `div`   | Indicates the `checkbox` is **not** checked.                                                                                                             |
+|            | `aria-checked="true"`  | `div`   | Indicates the `checkbox` is checked.                                                                                                                     |
 
 ## Event
 
-### Focus
+### Activate
 
-When the element is focus, a `is-focus` class is added.
+```javascript
+import Checkbox from '@19h47/checkbox';
 
-### Blur
+const $checkbox = document.querySelectorAll('[role="checkbox"]');
+const checkbox = new Checkbox($checkbox);
 
-When the element is blur, the `is-focus` class is removed.
+checkbox.init();
 
-### Keydown
+checkbox.$input.addEventListener('activate', event => {
+	const {
+		target: { value },
+	} = event;
 
-When the space key is pressed, the `toggle` method is trigged.
+	console.log(value); // Current activate value
+});
+```
 
-### Click
+### Deactivate
 
-When the element is cliked, the `toggle` method is trigged.
+```javascript
+import Checkbox from '@19h47/checkbox';
+
+const $checkbox = document.querySelectorAll('[role="checkbox"]');
+const checkbox = new Checkbox($checkbox);
+
+checkbox.init();
+
+checkbox.$input.addEventListener('deactivate', event => {
+	const {
+		target: { value },
+	} = event;
+
+	console.log(value); // Current deactivate value
+});
+```
 
 ## Example
 
-An example is located right [here](https://19h47.github.io/19h47-checkbox/), see [sources](/docs/index.html).
+An example is located right [here](https://19h47.github.io/19h47-checkbox/), see [sources](https://github.com/19h47/19h47-checkbox/blob/master/index.html).
 
 ## Acknowledgments
 

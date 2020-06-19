@@ -32,7 +32,8 @@
 				background-color: black;
 			}
 
-			.Form__checkbox.is-off {
+			.Form__checkbox.is-off,
+			.Form__checkbox[disabled] {
 				opacity: 0.3;
 				pointer-events: none;
 			}
@@ -49,17 +50,17 @@
 
 				<div class="col-12 my-5">
 					<div class="border p-3">
-						<legend id="sandwich-condiments">Sandwich Condiments</legend>
+						<h3 id="sandwich-condiments">Sandwich Condiments</h3>
 
 						<div role="group" aria-labelledby="sandwich-condiments">
-							<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false">
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
 								<button class="mr-3" type="button" tabindex="-1"></button>Lettuce
 								<div class="d-none">
 									<input id="lettuce" name="lettuce" value="Lettuce" type="checkbox">
 								</div>
 							</div>
 
-							<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false">
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
 								<button class="mr-3" type="button" tabindex="-1"></button>Tomato
 								<div class="d-none">
 									<input id="tomato" name="tomato" value="Tomato" type="checkbox">
@@ -67,21 +68,21 @@
 							</div>
 
 							<fieldset class="border">
-								<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false">
+								<div class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false">
 									<button class="mr-3" type="button" tabindex="-1"></button>Roma
 									<div class="d-none">
 										<input id="roma" name="roma" value="Roma" type="checkbox">
 									</div>
 								</div>
 
-								<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false">
+								<div class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false">
 									<button class="mr-3" type="button" tabindex="-1"></button>Monterosa
 									<div class="d-none">
 										<input id="monterosa" name="monterosa" value="Monterosa" type="checkbox">
 									</div>
 								</div>
 
-								<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false">
+								<div class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off" tabindex="-1" disabled="disabled" role="checkbox" aria-checked="false">
 									<button class="mr-3" type="button" tabindex="-1"></button>Beefsteak
 									<div class="d-none">
 										<input id="beefsteak" name="beefsteak" value="Beefsteak" type="checkbox">
@@ -89,18 +90,26 @@
 								</div>
 							</fieldset>
 
-							<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox is-selected" tabindex="0" role="checkbox" aria-checked="true">
+							<div class="Form__checkbox m-3 align-items-center d-flex is-selected" tabindex="0" role="checkbox" aria-checked="true">
 								<button class="mr-3 is-selected" type="button" tabindex="-1"></button>Mustard
 								<div class="d-none">
 									<input id="mustard" name="mustard" value="Mustard" type="checkbox" checked="checked">
 								</div>
 							</div>
 
-							<div class="Form__checkbox m-3 align-items-center d-flex js-checkbox" tabindex="0" role="checkbox" aria-checked="false">
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
 								<button class="mr-3" type="button" tabindex="-1"></button>
 								<div>Sprouts</div>
 								<div class="d-none">
 									<input id="sprouts" name="sprouts" value="Sprouts" type="checkbox">
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex disabled" role="checkbox" aria-checked="false" aria-disabled="true" tabindex="-1" disabled="disabled">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								<div>Disabled</div>
+								<div class="d-none">
+									<input id="disabled" name="disabled" value="Disabled" type="checkbox">
 								</div>
 							</div>
 						</div>
@@ -111,13 +120,12 @@
 
 		<script src="main.js"></script>
 		<script>
-			const elements = document.querySelectorAll('.js-checkbox');
+			const elements = document.querySelectorAll('[role="checkbox"]');
 			const $value = document.querySelector('.js-value');
 			const tomatoes = [];
 
 			for (let i = 0; i < elements.length; i++) {
 				const $element = elements[i];
-				const $input = $element.querySelector('input[type="checkbox"]');
 				const checkbox = new Checkbox.default($element);
 
 				checkbox.init();
@@ -126,7 +134,7 @@
 					tomatoes.push(checkbox);
 				}
 
-				$input.addEventListener('activate', event => {
+				checkbox.$input.addEventListener('activate', event => {
 					const {
 						target: { value },
 					} = event;
@@ -142,7 +150,7 @@
 					}
 				});
 
-				$input.addEventListener('deactivate', event => {
+				checkbox.$input.addEventListener('deactivate', event => {
 					const {
 						target: { value },
 					} = event;
