@@ -23,6 +23,7 @@ export default class Checkbox {
 	constructor(element) {
 		this.rootElement = element;
 
+		// Bind
 		this.onClick = this.onClick.bind(this);
 		this.onKeydown = this.onKeydown.bind(this);
 	}
@@ -56,7 +57,7 @@ export default class Checkbox {
 	}
 
 	onKeydown(event) {
-		const key = event.keyCode;
+		const { keyCode: key } = event;
 
 		const codes = {
 			[SPACE]: () => {
