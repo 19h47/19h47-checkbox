@@ -1,11 +1,8 @@
 /**
  *
- * @file webpack.common.js
- * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
+ * @file webpack.config.common.js
+ * @author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
  */
-
-// Node modules
-const path = require('path'); // eslint-disable-line
 
 // Plugins
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -30,10 +27,12 @@ module.exports = {
 		port: 3000,
 		inline: true,
 		disableHostCheck: true,
+		writeToDisk: true,
 	},
 	resolve: {
 		alias: {
 			'@': resolve('src'),
+			Utils: resolve('src/utils'),
 		},
 	},
 	module: {
@@ -59,9 +58,6 @@ module.exports = {
 			filename: resolve('docs/index.html'),
 			template: resolve('index.html'),
 			inject: false,
-			minify: {
-				removeRedundantAttributes: false,
-			},
 		}),
 		new WebpackNotifierPlugin({
 			title: 'Webpack',
