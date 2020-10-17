@@ -41,16 +41,24 @@
 				opacity: 0.3;
 				pointer-events: none;
 			}
+
+			.Alert {
+				margin: 1em;
+				position: fixed;
+				top: 0;
+				right: 0;
+				z-index: 10;
+			}
 		</style>
 	</head>
 	<body>
+		<div class="Alert js-alert"></div>
+
 		<div class="container">
 			<div class="row my-5">
 				<div class="col-12">
 					<h1 class="m-0">
-						<a href="https://github.com/19h47/19h47-checkbox"
-							>Checkbox<sup class="js-value">Mustard</sup></a
-						>
+						<a href="https://github.com/19h47/19h47-checkbox">Checkbox</a>
 					</h1>
 				</div>
 			</div>
@@ -216,8 +224,22 @@
 
 		<script src="main.js"></script>
 		<script>
+			const alert = content => {
+				const div = document.createElement('div');
+
+				div.className = 'toast fade show';
+				div.style = 'toast fade show';
+				div.innerHTML = `<div class="toast-body">${content}</div>`;
+
+				div.setAttribute('role', 'alert');
+				div.setAttribute('aria-live', 'assertive');
+				div.setAttribute('aria-atomic', 'true');
+
+				return div;
+			};
+			const $alert = document.querySelector('.js-alert');
+
 			const elements = document.querySelectorAll('[role="checkbox"]');
-			const $value = document.querySelector('.js-value');
 			const tomatoes = [];
 
 			for (let i = 0; i < elements.length; i++) {
@@ -234,7 +256,12 @@
 					const {
 						target: { value },
 					} = event;
-					$value.innerHTML = value;
+
+					const $el = alert(`<strong>${value}</strong> has been activated!`);
+
+					$alert.appendChild($el);
+
+					setTimeout(() => $el.parentNode.removeChild($el), 2000);
 
 					if ('Tomato' === value) {
 						tomatoes.forEach(tomato => {
@@ -250,6 +277,12 @@
 					const {
 						target: { value },
 					} = event;
+
+					const $el = alert(`<strong>${value}</strong> has been deactivated!`);
+
+					$alert.appendChild($el);
+
+					setTimeout(() => $el.parentNode.removeChild($el), 2000);
 
 					if ('Tomato' === value) {
 						tomatoes.forEach(tomato => {
