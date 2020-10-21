@@ -1,394 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<title>Checkbox</title>
-	<link rel="icon" type="image/png" href="check-box-with-check.png" />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Checkbox</title>
+		<link rel="icon" type="image/png" href="check-box-with-check.png" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
 
-	<style>
-		.Form__checkbox button {
-			width: 1.5rem;
-			height: 1.5rem;
-			position: relative;
-			border: 1px solid black;
-		}
+		<style>
+			.Form__checkbox button {
+				width: 1.5rem;
+				height: 1.5rem;
+				position: relative;
+				border: 1px solid black;
+			}
 
-		.Form__checkbox button::after {
-			display: block;
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			margin: 3px;
-			content: '';
-		}
+			.Form__checkbox button::after {
+				display: block;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				margin: 3px;
+				content: '';
+			}
 
-		.Form__checkbox.is-selected button:after {
-			background-color: black;
-		}
+			.Form__checkbox.is-selected button:after {
+				background-color: black;
+			}
 
-		.Form__checkbox.is-off,
-		.Form__checkbox[disabled] {
-			opacity: 0.3;
-			pointer-events: none;
-		}
+			.Form__checkbox.is-off,
+			.Form__checkbox[disabled] {
+				opacity: 0.3;
+				pointer-events: none;
+			}
 
-		.Alert {
-			margin: 1em;
-			position: fixed;
-			top: 0;
-			right: 0;
-			z-index: 10;
-		}
-	</style>
-</head>
+			.Alert {
+				margin: 1em;
+				position: fixed;
+				top: 0;
+				right: 0;
+				z-index: 10;
+			}
+		</style>
+	</head>
 
-<body>
-	<div class="Alert js-alert"></div>
+	<body>
+		<div class="Alert js-alert"></div>
 
-	<div class="container">
-		<div class="row my-5">
-			<div class="col-12">
-				<h1 class="m-0">
-					<a href="https://github.com/19h47/19h47-checkbox">Checkbox</a>
-				</h1>
+		<div class="container">
+			<div class="row my-5">
+				<div class="col-12">
+					<h1 class="m-0">
+						<a href="https://github.com/19h47/19h47-checkbox">Checkbox</a>
+					</h1>
+				</div>
 			</div>
-		</div>
 
-		<div class="row my-5">
-			<div class="col-12">
-				<div class="border px-3 py-4">
-					<h3 class="mb-3" id="sandwich-condiments">Sandwich Condiments</h3>
+			<div class="row my-5">
+				<div class="col-12">
+					<div class="border px-3 py-4">
+						<h3 class="mb-3" id="sandwich-condiments">Sandwich Condiments</h3>
 
-					<div class="js-sandwich-condiments" role="group" aria-labelledby="sandwich-condiments">
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox"
-							aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>Lettuce
-							<div class="d-none">
-								<input id="lettuce" name="condiments[]" value="Lettuce" type="checkbox" />
-							</div>
-						</div>
-
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox"
-							aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>Tomato
-							<div class="d-none">
-								<input id="tomato" name="condiments[]" value="Tomato" type="checkbox" />
-							</div>
-						</div>
-
-						<fieldset class="border">
-							<div class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off" tabindex="-1"
-								disabled role="checkbox" aria-checked="false">
-								<button class="mr-3" type="button" tabindex="-1"></button>Roma
+						<div class="js-sandwich-condiments" role="group" aria-labelledby="sandwich-condiments">
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox"
+								aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>Lettuce
 								<div class="d-none">
-									<input id="roma" name="roma" value="Roma" type="checkbox" />
+									<input id="lettuce" name="condiments[]" value="Lettuce" type="checkbox" />
 								</div>
 							</div>
 
-							<div class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off" tabindex="-1"
-								disabled role="checkbox" aria-checked="false">
-								<button class="mr-3" type="button" tabindex="-1"></button>Monterosa
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox"
+								aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>Tomato
 								<div class="d-none">
-									<input id="monterosa" name="monterosa" value="Monterosa" type="checkbox" />
+									<input id="tomato" name="condiments[]" value="Tomato" type="checkbox" />
 								</div>
 							</div>
 
-							<div class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off" tabindex="-1"
-								disabled role="checkbox" aria-checked="false">
-								<button class="mr-3" type="button" tabindex="-1"></button>Beefsteak
+							<fieldset class="border">
+								<div class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off" tabindex="-1"
+									disabled role="checkbox" aria-checked="false">
+									<button class="mr-3" type="button" tabindex="-1"></button>Roma
+									<div class="d-none">
+										<input id="roma" name="roma" value="Roma" type="checkbox" />
+									</div>
+								</div>
+
+								<div class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off" tabindex="-1"
+									disabled role="checkbox" aria-checked="false">
+									<button class="mr-3" type="button" tabindex="-1"></button>Monterosa
+									<div class="d-none">
+										<input id="monterosa" name="monterosa" value="Monterosa" type="checkbox" />
+									</div>
+								</div>
+
+								<div class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off" tabindex="-1"
+									disabled role="checkbox" aria-checked="false">
+									<button class="mr-3" type="button" tabindex="-1"></button>Beefsteak
+									<div class="d-none">
+										<input id="beefsteak" name="beefsteak" value="Beefsteak" type="checkbox" />
+									</div>
+								</div>
+							</fieldset>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex is-selected" tabindex="0"
+								role="checkbox" aria-checked="true">
+								<button class="mr-3 is-selected" type="button" tabindex="-1"></button>Mustard
 								<div class="d-none">
-									<input id="beefsteak" name="beefsteak" value="Beefsteak" type="checkbox" />
+									<input id="mustard" name="condiments[]" value="Mustard" type="checkbox" checked />
 								</div>
 							</div>
-						</fieldset>
 
-						<div class="Form__checkbox m-3 align-items-center d-flex is-selected" tabindex="0"
-							role="checkbox" aria-checked="true">
-							<button class="mr-3 is-selected" type="button" tabindex="-1"></button>Mustard
-							<div class="d-none">
-								<input id="mustard" name="condiments[]" value="Mustard" type="checkbox" checked />
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox"
+								aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								<div>Sprouts</div>
+								<div class="d-none">
+									<input id="sprouts" name="condiments[]" value="Sprouts" type="checkbox" />
+								</div>
+							</div>
+
+							<div class="Form__checkbox mx-3 mt-3 align-items-center d-flex disabled" role="checkbox"
+								aria-checked="false" aria-disabled="true" tabindex="-1" disabled>
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								<div>Disabled</div>
+								<div class="d-none">
+									<input id="disabled" name="condiments[]" value="Disabled" type="checkbox" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row my-5">
+				<div class="col-12">
+					<div class="border px-3 py-4">
+						<h3 class="mb-3" id="city-of-splendors">City of Splendors</h3>
+
+						<div class="border my-3">
+							<div class="Form__checkbox m-3 align-items-center d-flex js-select-all" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Select All
+								<div class="d-none">
+									<input id="select-all" name="select-all" value="select-all" type="checkbox" />
+								</div>
 							</div>
 						</div>
 
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox"
-							aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							<div>Sprouts</div>
-							<div class="d-none">
-								<input id="sprouts" name="condiments[]" value="Sprouts" type="checkbox" />
-							</div>
-						</div>
+						<div class="js-city-of-splendors mt-3" role="group" aria-labelledby="city-of-splendors">
 
-						<div class="Form__checkbox mx-3 mt-3 align-items-center d-flex disabled" role="checkbox"
-							aria-checked="false" aria-disabled="true" tabindex="-1" disabled>
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							<div>Disabled</div>
-							<div class="d-none">
-								<input id="disabled" name="condiments[]" value="Disabled" type="checkbox" />
+							<div class="Form__checkbox mx-3 mb-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Curst
+								<div class="d-none">
+									<input id="curst" name="curst" value="Curst" type="checkbox" />
+								</div>
 							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Doppelganger, Greater
+								<div class="d-none">
+									<input id="doppelganger-greater" name="city-of-splendors[]" value="Doppelganger, greater" type="checkbox" />
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Duhlarkin
+								<div class="d-none">
+									<input id="duhlarkin" name="city-of-splendors[]" value="Duhlarkin" type="checkbox" />
+								</div>
+							</div>
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Ghaunadan
+								<div class="d-none">
+									<input id="ghaunadan" name="city-of-splendors[]" value="Ghaunadan" type="checkbox" />
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Gulguthydra
+								<div class="d-none">
+									<input id="gulguthydra" name="city-of-splendors[]ra" value="Gulguthydra" type="checkbox" />
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Hakeashar
+								<div class="d-none">
+									<input id="hakeashar" name="city-of-splendors[]" value="Hakeashar" type="checkbox" />
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Leucrotta, Greater
+								<div class="d-none">
+									<input id="leucrotta-greater" name="city-of-splendors[]" value="Leucrotta, greater" type="checkbox" />
+								</div>
+							</div>
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>Nyth
+								<div class="d-none">
+									<input id="nyth" name="city-of-splendors[]" value="Nyth" type="checkbox" />
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Palimpsest
+								<div class="d-none">
+									<input id="palimpsest" name="city-of-splendors[]" value="Palimpsest" type="checkbox" />
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Peltast
+								<div class="d-none">
+									<input id="peltast" name="city-of-splendors[]" value="Peltast" type="checkbox" />
+								</div>
+							</div>
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Raggamoffyn
+								<div class="d-none">
+									<input id="raggamoffyn" name="city-of-splendors[]" value="Raggamoffyn" type="checkbox" />
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Sewerm
+								<div class="d-none">
+									<input id="sewerm" name="city-of-splendors[]" value="Sewerm" type="checkbox" />
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Shadowrath
+								<div class="d-none">
+									<input id="shadowrath" name="city-of-splendors[]" value="Shadowrath" type="checkbox" />
+								</div>
+							</div>
+
+							<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Watchspider
+								<div class="d-none">
+									<input id="watchspider" name="city-of-splendors[]" value="Watchspider" type="checkbox" />
+								</div>
+							</div>
+
+							<div class="Form__checkbox mx-3 mt-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								Wereshark
+								<div class="d-none">
+									<input id="wereshark" name="city-of-splendors[]" value="Wereshark" type="checkbox" />
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="row my-5">
-			<div class="col-12">
-				<div class="border px-3 py-4">
-					<h3 class="mb-3" id="city-of-splendors">City of Splendors</h3>
 
-					<div class="border my-3">
-						<div class="Form__checkbox m-3 align-items-center d-flex js-select-all" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Select All
-							<div class="d-none">
-								<input id="select-all" name="select-all" value="select-all" type="checkbox" />
-							</div>
-						</div>
-					</div>
+		<script src="main.js"></script>
+		<script>
+			const alert = content => {
+				const div = document.createElement('div');
 
-					<div class="js-city-of-splendors mt-3" role="group" aria-labelledby="city-of-splendors">
+				div.className = 'toast fade show';
+				div.style = 'toast fade show';
+				div.innerHTML = `<div class="toast-body">${content}</div>`;
 
-						<div class="Form__checkbox mx-3 mb-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Curst
-							<div class="d-none">
-								<input id="curst" name="curst" value="Curst" type="checkbox" />
-							</div>
-						</div>
+				div.setAttribute('role', 'alert');
+				div.setAttribute('aria-live', 'assertive');
+				div.setAttribute('aria-atomic', 'true');
 
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Doppelganger, Greater
-							<div class="d-none">
-								<input id="doppelganger-greater" name="city-of-splendors[]" value="Doppelganger, greater" type="checkbox" />
-							</div>
-						</div>
+				return div;
+			};
+			const $alert = document.querySelector('.js-alert');
 
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Duhlarkin
-							<div class="d-none">
-								<input id="duhlarkin" name="city-of-splendors[]" value="Duhlarkin" type="checkbox" />
-							</div>
-						</div>
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Ghaunadan
-							<div class="d-none">
-								<input id="ghaunadan" name="city-of-splendors[]" value="Ghaunadan" type="checkbox" />
-							</div>
-						</div>
+			const onChange = content => {
+				const $el = alert(content);
 
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Gulguthydra
-							<div class="d-none">
-								<input id="gulguthydra" name="city-of-splendors[]ra" value="Gulguthydra" type="checkbox" />
-							</div>
-						</div>
+				$alert.appendChild($el);
 
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Hakeashar
-							<div class="d-none">
-								<input id="hakeashar" name="city-of-splendors[]" value="Hakeashar" type="checkbox" />
-							</div>
-						</div>
+				$el.addEventListener(
+					'click',
+					() => $el.style.setProperty('display', 'none'),
+					false,
+				);
 
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Leucrotta, Greater
-							<div class="d-none">
-								<input id="leucrotta-greater" name="city-of-splendors[]" value="Leucrotta, greater" type="checkbox" />
-							</div>
-						</div>
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>Nyth
-							<div class="d-none">
-								<input id="nyth" name="city-of-splendors[]" value="Nyth" type="checkbox" />
-							</div>
-						</div>
+				setTimeout(() => $el.parentNode.removeChild($el), 2000);
+			};
 
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Palimpsest
-							<div class="d-none">
-								<input id="palimpsest" name="city-of-splendors[]" value="Palimpsest" type="checkbox" />
-							</div>
-						</div>
+			//
+			const $cityOfSplendors = document.querySelector('.js-city-of-splendors');
+			const $selectAll = document.querySelector('.js-select-all');
 
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Peltast
-							<div class="d-none">
-								<input id="peltast" name="city-of-splendors[]" value="Peltast" type="checkbox" />
-							</div>
-						</div>
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Raggamoffyn
-							<div class="d-none">
-								<input id="raggamoffyn" name="city-of-splendors[]" value="Raggamoffyn" type="checkbox" />
-							</div>
-						</div>
+			const checkboxgroup = new Checkbox.CheckboxGroup($cityOfSplendors);
+			const selectAll = new Checkbox.default($selectAll);
 
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Sewerm
-							<div class="d-none">
-								<input id="sewerm" name="city-of-splendors[]" value="Sewerm" type="checkbox" />
-							</div>
-						</div>
+			checkboxgroup.init();
+			selectAll.init();
 
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Shadowrath
-							<div class="d-none">
-								<input id="shadowrath" name="city-of-splendors[]" value="Shadowrath" type="checkbox" />
-							</div>
-						</div>
+			const sandwichCondiments = document.querySelector('.js-sandwich-condiments').querySelectorAll('[role="checkbox"]');
+			const tomatoes = [];
 
-						<div class="Form__checkbox m-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Watchspider
-							<div class="d-none">
-								<input id="watchspider" name="city-of-splendors[]" value="Watchspider" type="checkbox" />
-							</div>
-						</div>
+			for (let i = 0; i < sandwichCondiments.length; i++) {
+				const $element = sandwichCondiments[i];
+				const checkbox = new Checkbox.default($element);
 
-						<div class="Form__checkbox mx-3 mt-3 align-items-center d-flex" tabindex="0" role="checkbox" aria-checked="false">
-							<button class="mr-3" type="button" tabindex="-1"></button>
-							Wereshark
-							<div class="d-none">
-								<input id="wereshark" name="city-of-splendors[]" value="Wereshark" type="checkbox" />
-							</div>
-						</div>
+				checkbox.init();
 
-					</div>
-				</div>
-			</div>
-
-			<script src="main.js"></script>
-			<script>
-				const alert = content => {
-					const div = document.createElement('div');
-
-					div.className = 'toast fade show';
-					div.style = 'toast fade show';
-					div.innerHTML = `<div class="toast-body">${content}</div>`;
-
-					div.setAttribute('role', 'alert');
-					div.setAttribute('aria-live', 'assertive');
-					div.setAttribute('aria-atomic', 'true');
-
-					return div;
-				};
-				const $alert = document.querySelector('.js-alert');
-
-				const onChange = content => {
-					const $el = alert(content);
-
-					$alert.appendChild($el);
-
-					$el.addEventListener(
-						'click',
-						() => $el.style.setProperty('display', 'none'),
-						false,
-					);
-
-					setTimeout(() => $el.parentNode.removeChild($el), 2000);
-				};
-
-				//
-				const $cityOfSplendors = document.querySelector('.js-city-of-splendors');
-				const $selectAll = document.querySelector('.js-select-all');
-
-				const checkboxgroup = new Checkbox.CheckboxGroup($cityOfSplendors);
-				const selectAll = new Checkbox.default($selectAll);
-
-				checkboxgroup.init();
-				selectAll.init();
-
-				const sandwichCondiments = document.querySelector('.js-sandwich-condiments').querySelectorAll('[role="checkbox"]');
-				const tomatoes = [];
-
-				for (let i = 0; i < sandwichCondiments.length; i++) {
-					const $element = sandwichCondiments[i];
-					const checkbox = new Checkbox.default($element);
-
-					checkbox.init();
-
-					if ($element.classList.contains('js-tomato')) {
-						tomatoes.push(checkbox);
-					}
-
-					checkbox.$input.addEventListener('activate', event => {
-						const {
-							target: { value },
-						} = event;
-
-						onChange(`<strong>${value}</strong> has been activated!`)
-
-						if ('Tomato' === value) {
-							tomatoes.forEach(tomato => {
-								tomato.rootElement.classList.remove('is-off');
-								tomato.rootElement.setAttribute('tabIndex', 0);
-								tomato.rootElement.removeAttribute('disabled');
-								tomato.activate();
-							});
-						}
-					});
-
-					checkbox.$input.addEventListener('deactivate', event => {
-						const {
-							target: { value },
-						} = event;
-
-						onChange(`<strong>${value}</strong> has been deactivated!`)
-
-						if ('Tomato' === value) {
-							tomatoes.forEach(tomato => {
-								tomato.rootElement.classList.add('is-off');
-								tomato.rootElement.setAttribute('tabIndex', -1);
-								tomato.deactivate();
-							});
-						}
-					});
+				if ($element.classList.contains('js-tomato')) {
+					tomatoes.push(checkbox);
 				}
 
-				checkboxgroup.checkboxes.forEach(checkbox => {
-					checkbox.$input.addEventListener('activate', event => {
-						const {
-							target: { value },
-						} = event;
+				checkbox.$input.addEventListener('activate', event => {
+					const {
+						target: { value },
+					} = event;
 
-						onChange(`<strong>${value}</strong> has been activated!`)
-					})
-					checkbox.$input.addEventListener('deactivate', event => {
-						const {
-							target: { value },
-						} = event;
+					onChange(`<strong>${value}</strong> has been activated!`)
 
-						onChange(`<strong>${value}</strong> has been deactivated!`)
-					})
+					if ('Tomato' === value) {
+						tomatoes.forEach(tomato => {
+							tomato.rootElement.classList.remove('is-off');
+							tomato.rootElement.setAttribute('tabIndex', 0);
+							tomato.rootElement.removeAttribute('disabled');
+							tomato.activate();
+						});
+					}
 				});
 
-				selectAll.$input.addEventListener('activate', event => {
-					checkboxgroup.checkboxes.forEach(checkbox => checkbox.activate());
-				});
+				checkbox.$input.addEventListener('deactivate', event => {
+					const {
+						target: { value },
+					} = event;
 
-				selectAll.$input.addEventListener('deactivate', event => {
-					checkboxgroup.checkboxes.forEach(checkbox => checkbox.deactivate());
-				});
-			</script>
-</body>
+					onChange(`<strong>${value}</strong> has been deactivated!`)
 
+					if ('Tomato' === value) {
+						tomatoes.forEach(tomato => {
+							tomato.rootElement.classList.add('is-off');
+							tomato.rootElement.setAttribute('tabIndex', -1);
+							tomato.deactivate();
+						});
+					}
+				});
+			}
+
+			checkboxgroup.checkboxes.forEach(checkbox => {
+				checkbox.$input.addEventListener('activate', event => {
+					const {
+						target: { value },
+					} = event;
+
+					onChange(`<strong>${value}</strong> has been activated!`)
+				})
+				checkbox.$input.addEventListener('deactivate', event => {
+					const {
+						target: { value },
+					} = event;
+
+					onChange(`<strong>${value}</strong> has been deactivated!`)
+				})
+			});
+
+			selectAll.$input.addEventListener('activate', event => {
+				checkboxgroup.checkboxes.forEach(checkbox => checkbox.activate());
+			});
+
+			selectAll.$input.addEventListener('deactivate', event => {
+				checkboxgroup.checkboxes.forEach(checkbox => checkbox.deactivate());
+			});
+		</script>
+	</body>
 </html>
