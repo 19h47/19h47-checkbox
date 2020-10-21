@@ -87,6 +87,17 @@ checkbox.$input.addEventListener('deactivate', event => {
 });
 ```
 
+## CheckboxGroup
+
+```javascript
+import { CheckboxGroup } from '@19h47/checkbox';
+
+const $element = document.querySelector('[role="group"]');
+const checkboxgroup = new CheckboxGroup($element);
+
+checkbox.init();
+```
+
 ## Example
 
 An example is located right [here](https://19h47.github.io/19h47-checkbox/), see [sources](https://github.com/19h47/19h47-checkbox/blob/master/index.html).
