@@ -89,6 +89,40 @@ checkbox.$input.addEventListener('deactivate', event => {
 
 ## CheckboxGroup
 
+The `CheckboxGroup` is a wrapper class around `Checkbox`.
+
+When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
+
+```html
+
+<div role="group">
+	<div tabindex="0" role="checkbox" aria-checked="false">
+		<button type="button" tabindex="-1"></button>
+		Curst
+		<div style="display: none;">
+			<input id="curst" name="curst" value="Curst" type="checkbox" />
+		</div>
+	</div>
+
+	<div tabindex="0" role="checkbox" aria-checked="false">
+		<button type="button" tabindex="-1"></button>
+		Doppelganger, Greater
+		<div style="display: none;">
+			<input id="doppelganger-greater" name="city-of-splendors[]" value="Doppelganger, greater" type="checkbox" />
+		</div>
+	</div>
+
+	<div tabindex="0" role="checkbox" aria-checked="false">
+		<button type="button" tabindex="-1"></button>
+		Duhlarkin
+		<div style="display: none;">
+			<input id="duhlarkin" name="city-of-splendors[]" value="Duhlarkin" type="checkbox" />
+		</div>
+	</div>
+</div>
+
+```
+
 ```javascript
 import { CheckboxGroup } from '@19h47/checkbox';
 
