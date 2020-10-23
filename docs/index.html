@@ -71,7 +71,9 @@
 			checkboxgroup.init();
 			selectAll.init();
 
-			const sandwichCondiments = document.querySelector('.js-sandwich-condiments').querySelectorAll('[role="checkbox"]');
+			const sandwichCondiments = document
+				.querySelector('.js-sandwich-condiments')
+				.querySelectorAll('[role="checkbox"]');
 			const tomatoes = [];
 
 			for (let i = 0; i < sandwichCondiments.length; i++) {
@@ -89,7 +91,7 @@
 						target: { value },
 					} = event;
 
-					onChange(`<strong>${value}</strong> has been activated!`)
+					onChange(`<strong>${value}</strong> has been activated!`);
 
 					if ('Tomato' === value) {
 						tomatoes.forEach(tomato => {
@@ -106,7 +108,7 @@
 						target: { value },
 					} = event;
 
-					onChange(`<strong>${value}</strong> has been deactivated!`)
+					onChange(`<strong>${value}</strong> has been deactivated!`);
 
 					if ('Tomato' === value) {
 						tomatoes.forEach(tomato => {
@@ -124,15 +126,15 @@
 						target: { value },
 					} = event;
 
-					onChange(`<strong>${value}</strong> has been activated!`)
-				})
+					onChange(`<strong>${value}</strong> has been activated!`);
+				});
 				checkbox.$input.addEventListener('deactivate', event => {
 					const {
 						target: { value },
 					} = event;
 
-					onChange(`<strong>${value}</strong> has been deactivated!`)
-				})
+					onChange(`<strong>${value}</strong> has been deactivated!`);
+				});
 			});
 
 			selectAll.$input.addEventListener('activate', event => {

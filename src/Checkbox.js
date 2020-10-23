@@ -24,8 +24,8 @@ export default class Checkbox {
 		this.rootElement = element;
 
 		// Bind
-		this.onClick = this.onClick.bind(this);
-		this.onKeydown = this.onKeydown.bind(this);
+		this.handleClick = this.handleClick.bind(this);
+		this.handleKeydown = this.handleKeydown.bind(this);
 	}
 
 	init() {
@@ -46,17 +46,15 @@ export default class Checkbox {
 	}
 
 	initEvents() {
-		this.rootElement.addEventListener('keydown', this.onKeydown);
-		this.rootElement.addEventListener('click', this.onClick);
+		this.rootElement.addEventListener('keydown', this.handleKeydown);
+		this.rootElement.addEventListener('click', this.handleClick);
 		this.rootElement.addEventListener('blur', () => blur(this.rootElement));
 		this.rootElement.addEventListener('focus', () => focus(this.rootElement));
 	}
 
-	onClick() {
-		this.toggle();
-	}
+	handleClick = () => this.toggle();
 
-	onKeydown(event) {
+	handleKeydown(event) {
 		const { keyCode: key } = event;
 
 		const codes = {

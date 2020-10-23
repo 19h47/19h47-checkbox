@@ -1,3 +1,5 @@
+const plugins = ['@babel'];
+
 module.exports = {
 	root: true,
 	env: {
@@ -33,4 +35,5 @@ module.exports = {
 			},
 		},
 	},
+	plugins,
 };
