@@ -47,6 +47,25 @@ checkbox.init();
 |            | `aria-checked="false"` | `div`   | Indicates the `checkbox` is **not** checked.                                                                                                             |
 |            | `aria-checked="true"`  | `div`   | Indicates the `checkbox` is checked.                                                                                                                     |
 
+## Methods
+
+| Method         | Description             | Arguments                                                                          |
+| -------------- | ----------------------- | ---------------------------------------------------------------------------------- |
+| `activate()`   | Activate the checkbox   | `trigger` (optional) Whether or not the event should be trigger. Default to `true` |
+| `deactivate()` | Deactivate the checkbox | `trigger` (optional) Whether or not the event should be trigger. Default to `true` |
+
+```javascript
+import Checkbox from '@19h47/checkbox';
+
+const $checkbox = document.querySelector('[role="checkbox"]');
+const checkbox = new Checkbox($checkbox);
+
+checkbox.init();
+
+checkbox.activate();
+checkbox.deactivate();
+```
+
 ## Event
 
 ### Activate
@@ -94,7 +113,6 @@ The `CheckboxGroup` is a wrapper class around `Checkbox`.
 When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
 
 ```html
-
 <div role="group">
 	<div tabindex="0" role="checkbox" aria-checked="false">
 		<button type="button" tabindex="-1"></button>
@@ -108,7 +126,12 @@ When a user clicks a checkbox, holds Shift, and then clicks another checkbox a f
 		<button type="button" tabindex="-1"></button>
 		Doppelganger, Greater
 		<div style="display: none;">
-			<input id="doppelganger-greater" name="city-of-splendors[]" value="Doppelganger, greater" type="checkbox" />
+			<input
+				id="doppelganger-greater"
+				name="city-of-splendors[]"
+				value="Doppelganger, greater"
+				type="checkbox"
+			/>
 		</div>
 	</div>
 
@@ -120,7 +143,6 @@ When a user clicks a checkbox, holds Shift, and then clicks another checkbox a f
 		</div>
 	</div>
 </div>
-
 ```
 
 ```javascript

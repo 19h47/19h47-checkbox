@@ -1,9 +1,8 @@
 <!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta http-equiv="X-UA-Compatible" content="ie=edge"/><title>Checkbox</title><link rel="icon" type="image/png" href="check-box-with-check.png"/><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous"/><style>.Form__checkbox button {
-				width: 1.5rem;
-				height: 1.5rem;
+				width: 1.5em;
+				height: 1.5em;
 				position: relative;
 				border: 1px solid black;
-				min-height: 1.5rem;
 			}
 
 			.Form__checkbox button::after {
@@ -15,10 +14,13 @@
 				left: 0;
 				margin: 3px;
 				content: '';
+				transform: scale(0);
+				transition: 0.05s transform ease;
 			}
 
 			.Form__checkbox.is-selected button:after {
 				background-color: black;
+				transform: scale(1);
 			}
 
 			.Form__checkbox.is-off,
@@ -143,6 +145,10 @@ checkbox.init();</code></pre></div></div><div class="row my-5"><div class="col-1
 					} = event;
 
 					onChange(`<strong>${value}</strong> has been activated!`);
+
+					if (checkboxgroup.checkboxes.every(checkbox => checkbox.$input.checked)) {
+						selectAll.activate(false);
+					}
 				});
 				checkbox.$input.addEventListener('deactivate', event => {
 					const {
@@ -150,6 +156,14 @@ checkbox.init();</code></pre></div></div><div class="row my-5"><div class="col-1
 					} = event;
 
 					onChange(`<strong>${value}</strong> has been deactivated!`);
+
+					console.log(
+						checkboxgroup.checkboxes.every(checkbox => checkbox.$input.checked),
+					);
+
+					if (!checkboxgroup.checkboxes.every(checkbox => checkbox.$input.checked)) {
+						selectAll.deactivate(false);
+					}
 				});
 			});
 

@@ -21,11 +21,10 @@
 
 		<style>
 			.Form__checkbox button {
-				width: 1.5rem;
-				height: 1.5rem;
+				width: 1.5em;
+				height: 1.5em;
 				position: relative;
 				border: 1px solid black;
-				min-height: 1.5rem;
 			}
 
 			.Form__checkbox button::after {
@@ -37,10 +36,13 @@
 				left: 0;
 				margin: 3px;
 				content: '';
+				transform: scale(0);
+				transition: 0.05s transform ease;
 			}
 
 			.Form__checkbox.is-selected button:after {
 				background-color: black;
+				transform: scale(1);
 			}
 
 			.Form__checkbox.is-off,
@@ -672,6 +674,10 @@ checkbox.init();</code></pre>
 					} = event;
 
 					onChange(`<strong>${value}</strong> has been activated!`);
+
+					if (checkboxgroup.checkboxes.every(checkbox => checkbox.$input.checked)) {
+						selectAll.activate(false);
+					}
 				});
 				checkbox.$input.addEventListener('deactivate', event => {
 					const {
@@ -679,6 +685,14 @@ checkbox.init();</code></pre>
 					} = event;
 
 					onChange(`<strong>${value}</strong> has been deactivated!`);
+
+					console.log(
+						checkboxgroup.checkboxes.every(checkbox => checkbox.$input.checked),
+					);
+
+					if (!checkboxgroup.checkboxes.every(checkbox => checkbox.$input.checked)) {
+						selectAll.deactivate(false);
+					}
 				});
 			});
 

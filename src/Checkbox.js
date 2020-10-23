@@ -83,9 +83,11 @@ export default class Checkbox {
 	/**
 	 * Checkbox.activate
 	 *
+	 * @param {boolean} trigger Whether or not the event should be trigger.
+	 *
 	 * @return	{boolean}
 	 */
-	activate() {
+	activate(trigger = true) {
 		if (this.checked) {
 			return false;
 		}
@@ -99,8 +101,10 @@ export default class Checkbox {
 		this.$input.checked = true;
 		this.$input.setAttribute('checked', true);
 
-		triggerEvent(this.$input, 'input');
-		triggerEvent(this.$input, 'activate');
+		if (trigger) {
+			triggerEvent(this.$input, 'input');
+			triggerEvent(this.$input, 'activate');
+		}
 
 		return true;
 	}
@@ -108,9 +112,11 @@ export default class Checkbox {
 	/**
 	 * Checkbox.deactivate
 	 *
+	 * @param {boolean} trigger Whether or not the event should be trigger.
+	 *
 	 * @return	{boolean}
 	 */
-	deactivate() {
+	deactivate(trigger = true) {
 		if (!this.checked) {
 			return false;
 		}
@@ -125,7 +131,9 @@ export default class Checkbox {
 		this.$input.checked = false;
 		this.$input.removeAttribute('checked');
 
-		triggerEvent(this.$input, 'deactivate');
+		if (trigger) {
+			triggerEvent(this.$input, 'deactivate');
+		}
 
 		return true;
 	}
