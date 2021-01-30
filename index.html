@@ -46,7 +46,8 @@
 			}
 
 			.Form__checkbox.is-off,
-			.Form__checkbox[disabled] {
+			.Form__checkbox[disabled],
+			.Form__checkbox[aria-disabled] {
 				opacity: 0.3;
 				pointer-events: none;
 			}
@@ -521,6 +522,7 @@ checkbox.init();</code></pre>
 								tabindex="0"
 								role="checkbox"
 								aria-checked="false"
+								aria-disabled="true"
 							>
 								<button class="mr-3" type="button" tabindex="-1"></button>
 								Shadowrath
@@ -530,6 +532,7 @@ checkbox.init();</code></pre>
 										name="city-of-splendors[]"
 										value="Shadowrath"
 										type="checkbox"
+										disabled
 									/>
 								</div>
 							</div>
@@ -557,6 +560,7 @@ checkbox.init();</code></pre>
 								tabindex="0"
 								role="checkbox"
 								aria-checked="false"
+								aria-disabled="true"
 							>
 								<button class="mr-3" type="button" tabindex="-1"></button>
 								Wereshark
@@ -566,6 +570,7 @@ checkbox.init();</code></pre>
 										name="city-of-splendors[]"
 										value="Wereshark"
 										type="checkbox"
+										disabled
 									/>
 								</div>
 							</div>

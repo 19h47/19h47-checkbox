@@ -23,12 +23,12 @@ module.exports = {
 		filename: '../[name]/main.js',
 	},
 	devServer: {
-		static: [
-			resolve('/')
-		],
-		compress: true,
+		// static: [
+		// 	resolve('/')
+		// ],
+		// compress: true,
 		port: 3000,
-		inline: true,
+		// inline: true,
 	},
 	resolve: {
 		alias: {
