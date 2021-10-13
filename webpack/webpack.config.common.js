@@ -26,6 +26,13 @@ module.exports = {
 		path: resolve('dist'),
 
 	},
+	optimization: {
+		splitChunks: {
+			// include all types of chunks
+			chunks: 'all',
+			name: 'vendors'
+		},
+	},
 	devServer: {
 		// static: [
 		// 	resolve('/')
