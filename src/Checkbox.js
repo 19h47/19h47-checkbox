@@ -110,7 +110,7 @@ export default class Checkbox {
 		this.$input.setAttribute('checked', true);
 
 		if (trigger) {
-			triggerEvent(this.$input, ['activate', 'input']);
+			triggerEvent(this.$input, ['activate']);
 		}
 
 		return true;
