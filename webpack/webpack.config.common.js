@@ -22,24 +22,19 @@ module.exports = {
 		library: 'Checkbox',
 		libraryTarget: 'umd',
 		filename: '../[name]/main.js',
-
 		path: resolve('dist'),
-
 	},
 	optimization: {
 		splitChunks: {
 			// include all types of chunks
 			chunks: 'all',
-			name: 'vendors'
+			name: 'vendors',
 		},
 	},
 	devServer: {
-		// static: [
-		// 	resolve('/')
-		// ],
-		// compress: true,
 		port: 3000,
-		// inline: true,
+		static: [resolve('/')],
+		compress: true,
 	},
 	resolve: {
 		alias: {
@@ -64,6 +59,7 @@ module.exports = {
 			filename: resolve('docs/index.html'),
 			template: resolve('index.html'),
 			inject: false,
+			minify: { removeRedundantAttributes: false },
 		}),
 		new WebpackNotifierPlugin({
 			title: 'Webpack',
