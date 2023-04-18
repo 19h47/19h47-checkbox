@@ -1,6 +1,6 @@
 {
 	"name": "@19h47/checkbox",
-	"version": "4.4.1",
+	"version": "4.5.0",
 	"description": "Custom checkbox element with accessibility in mind",
 	"main": "dist/main.js",
 	"scripts": {
@@ -40,9 +40,7 @@
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-config-standard": "^17.0.0",
 		"eslint-import-resolver-webpack": "^0.13.2",
-		"eslint-loader": "^4.0.2",
 		"eslint-plugin-import": "^2.27.5",
-		"eslint-plugin-node": "^11.0.0",
 		"eslint-plugin-promise": "^6.1.1",
 		"eslint-webpack-plugin": "^4.0.1",
 		"html-webpack-plugin": "5.5.1",

@@ -4,10 +4,10 @@ import { SPACE } from '@19h47/keycode';
  * Trigger event
  *
  * @param  {object} element
- * @param  {string} name Event name
+ * @param  {array} names Events names
  * @return
  */
-const triggerEvent = (element, name) => element.dispatchEvent(new Event(name));
+const triggerEvent = (element, names) => names.forEach(name => element.dispatchEvent(new Event(name)));
 
 const focus = target => target.classList.add('is-focus');
 const blur = target => target.classList.remove('is-focus');
@@ -80,7 +80,7 @@ export default class Checkbox {
 			this.activate();
 		}
 
-		return triggerEvent(this.$input, 'change');
+		return triggerEvent(this.$input, ['input', 'change']);
 	}
 
 	/**
@@ -109,8 +109,7 @@ export default class Checkbox {
 		this.$input.setAttribute('checked', true);
 
 		if (trigger) {
-			triggerEvent(this.$input, 'input');
-			triggerEvent(this.$input, 'activate');
+			triggerEvent(this.$input, ['activate', 'input']);
 		}
 
 		return true;
@@ -139,7 +138,7 @@ export default class Checkbox {
 		this.$input.removeAttribute('checked');
 
 		if (trigger) {
-			triggerEvent(this.$input, 'deactivate');
+			triggerEvent(this.$input, ['deactivate']);
 		}
 
 		return true;
