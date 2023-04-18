@@ -7,7 +7,7 @@ import { SPACE } from '@19h47/keycode';
  * @param  {array} names Events names
  * @return
  */
-const triggerEvent = (element, names) => names.forEach(name => element.dispatchEvent(new Event(name)));
+const triggerEvent = (element, names) => names.forEach(name => element.dispatchEvent(new CustomEvent(name)));
 
 const focus = target => target.classList.add('is-focus');
 const blur = target => target.classList.remove('is-focus');
