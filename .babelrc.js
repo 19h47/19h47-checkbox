@@ -7,6 +7,6 @@ const presets = [
 	],
 ];
 
-const plugins = ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties'];
+const plugins = ['@babel/plugin-transform-runtime', '@babel/plugin-transform-class-properties'];
 
 module.exports = { presets, plugins };
