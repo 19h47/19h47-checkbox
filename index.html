@@ -647,9 +647,9 @@ checkbox.init();</code></pre>
 
 					if ('Tomato' === value) {
 						tomatoes.forEach(tomato => {
-							tomato.rootElement.classList.remove('is-off');
-							tomato.rootElement.setAttribute('tabIndex', 0);
-							tomato.rootElement.removeAttribute('disabled');
+							tomato.el.classList.remove('is-off');
+							tomato.el.setAttribute('tabIndex', 0);
+							tomato.el.removeAttribute('disabled');
 							tomato.activate();
 						});
 					}
@@ -664,8 +664,8 @@ checkbox.init();</code></pre>
 
 					if ('Tomato' === value) {
 						tomatoes.forEach(tomato => {
-							tomato.rootElement.classList.add('is-off');
-							tomato.rootElement.setAttribute('tabIndex', -1);
+							tomato.el.classList.add('is-off');
+							tomato.el.setAttribute('tabIndex', -1);
 							tomato.deactivate();
 						});
 					}

@@ -23,11 +23,6 @@ module.exports = {
 		'import/no-named-as-default': 0,
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
 	},
-	parser: '@babel/eslint-parser',
-	parserOptions: {
-		sourceType: 'module',
-		allowImportExportEverywhere: true,
-	},
 	settings: {
 		'import/resolver': {
 			webpack: {
