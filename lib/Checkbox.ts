@@ -36,9 +36,7 @@ export default class Checkbox {
 
 		this.$input = this.el.querySelector('input');
 		this.checked = JSON.parse(this.el.getAttribute('aria-checked') as string);
-		this.disabled = this.el.getAttribute('aria-disabled')
-			? JSON.parse(this.el.getAttribute('aria-disabled') as string)
-			: false;
+        this.disabled = JSON.parse(this.el.getAttribute('aria-disabled') as string);
 
 		if (!this.checked) {
 			this.el.setAttribute('aria-checked', 'false');
