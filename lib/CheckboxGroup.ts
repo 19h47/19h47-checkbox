@@ -1,17 +1,27 @@
 import Checkbox from './Checkbox';
 
+/**
+ * Class CheckboxGroup
+ *
+ * @param {HTMLElement} el HTML element.
+ *
+ * @property {HTMLElement} el HTML element.
+ * @property {Checkbox[]} checkboxes Array of Checkbox.
+ * @property {EventTarget | null} lastChecked Last checked target.
+ *
+ * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
+ */
 export default class CheckboxGroup {
 	el: HTMLElement;
-	checkboxes: Checkbox[];
-	lastChecked: EventTarget | null;
+	checkboxes: Checkbox[] = [];
+	lastChecked: EventTarget | null = null;
 
+	/**
+	 *
+	 * @param {HTMLElement} el
+	 */
 	constructor(el: HTMLElement) {
 		this.el = el;
-
-		this.checkboxes = [];
-		this.lastChecked = null;
-
-		this.handleCheck = this.handleCheck.bind(this);
 	}
 
 	init(): void {
@@ -33,7 +43,7 @@ export default class CheckboxGroup {
 		);
 	}
 
-	handleCheck(event: MouseEvent): void {
+	handleCheck = (event: MouseEvent): void => {
 		const { currentTarget, shiftKey } = event;
 
 		const checked = true === JSON.parse((event.currentTarget as HTMLElement)?.getAttribute('aria-checked') as string);

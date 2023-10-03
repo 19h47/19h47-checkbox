@@ -1,4 +1,4 @@
-const plugins = ['@babel'];
+const plugins = [];
 
 module.exports = {
 	root: true,

@@ -15,29 +15,18 @@ const blur = (target: HTMLElement): void => target.classList.remove('is-focus');
 /**
  * Class Checkbox
  *
- * @param {object} element DOM element.
- * @constructor Checkbox
+ * @param {HTMLElement} el HTML element.
+ *
  * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
  */
 export default class Checkbox {
 	el: HTMLElement;
-	$input: HTMLInputElement | null;
-	checked: boolean;
-	disabled: boolean;
+	$input: HTMLInputElement | null = null;
+	checked: boolean = false;
+	disabled: boolean = false;
 
-	/**
-	 *
-	 * @param {HTMLElement} el
-	 */
 	constructor(el: HTMLElement) {
 		this.el = el;
-		this.$input = null;
-		this.checked = false;
-		this.disabled = false;
-
-		// Bind
-		this.handleClick = this.handleClick.bind(this);
-		this.handleKeydown = this.handleKeydown.bind(this);
 	}
 
 	init(): void | null {
@@ -71,7 +60,7 @@ export default class Checkbox {
 
 	handleClick = (): void | null => this.toggle();
 
-	handleKeydown(event: KeyboardEvent) {
+	handleKeydown = (event: KeyboardEvent): any => {
 		const { key, code } = event;
 
 		const codes: any = {
