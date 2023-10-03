@@ -36,7 +36,7 @@ export default class Checkbox {
 
 		this.$input = this.el.querySelector('input');
 		this.checked = JSON.parse(this.el.getAttribute('aria-checked') as string);
-        this.disabled = JSON.parse(this.el.getAttribute('aria-disabled') as string);
+		this.disabled = JSON.parse(this.el.getAttribute('aria-disabled') as string);
 
 		if (!this.checked) {
 			this.el.setAttribute('aria-checked', 'false');
@@ -72,7 +72,7 @@ export default class Checkbox {
 		};
 
 		return (codes[key || code] || codes.default)();
-	}
+	};
 
 	toggle(): void | null {
 		if (this.checked) {

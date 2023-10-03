@@ -25,14 +25,12 @@ export default class CheckboxGroup {
 	}
 
 	init(): void {
-		this.checkboxes = [...this.el.querySelectorAll('[role="checkbox"]')].map(
-			$element => {
-				const checkbox = new Checkbox($element as HTMLElement);
-				checkbox.init();
+		this.checkboxes = [...this.el.querySelectorAll('[role="checkbox"]')].map($element => {
+			const checkbox = new Checkbox($element as HTMLElement);
+			checkbox.init();
 
-				return checkbox;
-			},
-		);
+			return checkbox;
+		});
 
 		this.initEvents();
 	}
@@ -46,7 +44,9 @@ export default class CheckboxGroup {
 	handleCheck = (event: MouseEvent): void => {
 		const { currentTarget, shiftKey } = event;
 
-		const checked = true === JSON.parse((currentTarget as HTMLElement)?.getAttribute('aria-checked') as string);
+		const checked = JSON.parse(
+			(currentTarget as HTMLElement)?.getAttribute('aria-checked') as string,
+		);
 
 		let inBetween = false;
 
@@ -56,7 +56,7 @@ export default class CheckboxGroup {
 
 				if (el === currentTarget || el === this.lastChecked) {
 					inBetween = !inBetween;
-					console.log('Starting to check them in between!');
+					// console.log('Starting to check them in between!');
 				}
 
 				if (inBetween) {
@@ -66,5 +66,5 @@ export default class CheckboxGroup {
 		}
 
 		this.lastChecked = currentTarget;
-	}
+	};
 }
