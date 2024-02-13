@@ -156,8 +156,8 @@ checkbox.init();
 
 ## Example
 
-An example is located right [here](https://19h47.github.io/19h47-checkbox/), see [sources](https://github.com/19h47/19h47-checkbox/blob/master/index.html).
+An example is located right [here](https://19h47.github.io/19h47-checkbox/), see [sources](https://github.com/19h47/19h47-checkbox/blob/main/index.html).
 
 ## References
 
--   [Checkbox Example](https://www.w3.org/TR/wai-aria-practices/examples/checkbox/checkbox-2/checkbox-2.html)
+-   [Checkbox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/)
