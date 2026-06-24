@@ -357,7 +357,8 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 					<p>
 						A <code>role="group"</code> with <code>aria-labelledby</code>, per-item
 						<code>activate</code> / <code>deactivate</code> events, pre-checked and
-						disabled items, and custom logic (Tomato enables nested options).
+						disabled items. Tomato is a tri-state parent over a nested
+						<code>CheckboxGroup</code> of varieties.
 					</p>
 					<div class="border px-3 py-4">
 						<h3 class="mb-3" id="sandwich-condiments-label">Sandwich Condiments</h3>
@@ -368,7 +369,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 							aria-labelledby="sandwich-condiments-label"
 						>
 							<div
-								class="Form__checkbox m-3 align-items-center d-flex"
+								class="Form__checkbox m-3 align-items-center d-flex js-sandwich-condiment"
 								tabindex="0"
 								role="checkbox"
 								aria-checked="false"
@@ -384,78 +385,85 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 								</div>
 							</div>
 
-							<div
-								class="Form__checkbox m-3 align-items-center d-flex"
-								tabindex="0"
-								role="checkbox"
-								aria-checked="false"
-							>
-								<button class="mr-3" type="button" tabindex="-1"></button>Tomato
-								<div class="d-none">
-									<input
-										id="tomato"
-										name="condiments[]"
-										value="Tomato"
-										type="checkbox"
-									/>
+							<div class="m-3">
+								<div
+									class="Form__checkbox align-items-center d-flex js-tomato-parent"
+									tabindex="0"
+									role="checkbox"
+									aria-checked="false"
+									id="tomato"
+								>
+									<button class="mr-3" type="button" tabindex="-1"></button>Tomato
+									<div class="d-none">
+										<input
+											id="tomato-input"
+											name="condiments[]"
+											value="Tomato"
+											type="checkbox"
+										/>
+									</div>
+								</div>
+
+								<div
+									class="js-tomato-varieties border mt-3"
+									role="group"
+									aria-labelledby="tomato"
+								>
+									<div
+										class="Form__checkbox m-3 align-items-center d-flex is-off"
+										role="checkbox"
+										aria-checked="false"
+										aria-disabled="true"
+										tabindex="-1"
+									>
+										<button class="mr-3" type="button" tabindex="-1"></button>Roma
+										<div class="d-none">
+											<input id="roma" name="roma" value="Roma" type="checkbox" />
+										</div>
+									</div>
+
+									<div
+										class="Form__checkbox m-3 align-items-center d-flex is-off"
+										role="checkbox"
+										aria-checked="false"
+										aria-disabled="true"
+										tabindex="-1"
+									>
+										<button class="mr-3" type="button" tabindex="-1"></button
+										>Monterosa
+										<div class="d-none">
+											<input
+												id="monterosa"
+												name="monterosa"
+												value="Monterosa"
+												type="checkbox"
+											/>
+										</div>
+									</div>
+
+									<div
+										class="Form__checkbox m-3 align-items-center d-flex is-off"
+										role="checkbox"
+										aria-checked="false"
+										aria-disabled="true"
+										tabindex="-1"
+									>
+										<button class="mr-3" type="button" tabindex="-1"></button
+										>Beefsteak
+										<div class="d-none">
+											<input
+												id="beefsteak"
+												name="beefsteak"
+												value="Beefsteak"
+												type="checkbox"
+											/>
+										</div>
+									</div>
 								</div>
 							</div>
 
-							<fieldset class="border">
-								<div
-									class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off"
-									tabindex="-1"
-									disabled
-									role="checkbox"
-									aria-checked="false"
-								>
-									<button class="mr-3" type="button" tabindex="-1"></button>Roma
-									<div class="d-none">
-										<input id="roma" name="roma" value="Roma" type="checkbox" />
-									</div>
-								</div>
-
-								<div
-									class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off"
-									tabindex="-1"
-									disabled
-									role="checkbox"
-									aria-checked="false"
-								>
-									<button class="mr-3" type="button" tabindex="-1"></button
-									>Monterosa
-									<div class="d-none">
-										<input
-											id="monterosa"
-											name="monterosa"
-											value="Monterosa"
-											type="checkbox"
-										/>
-									</div>
-								</div>
-
-								<div
-									class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off"
-									tabindex="-1"
-									disabled
-									role="checkbox"
-									aria-checked="false"
-								>
-									<button class="mr-3" type="button" tabindex="-1"></button
-									>Beefsteak
-									<div class="d-none">
-										<input
-											id="beefsteak"
-											name="beefsteak"
-											value="Beefsteak"
-											type="checkbox"
-										/>
-									</div>
-								</div>
-							</fieldset>
-
 							<div
-								class="Form__checkbox m-3 align-items-center d-flex is-selected"
+								class="Form__checkbox m-3 align-items-center d-flex js-sandwich-condiment is-selected"
 								tabindex="0"
 								role="checkbox"
 								aria-checked="true"
@@ -478,7 +486,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 							</div>
 
 							<div
-								class="Form__checkbox m-3 align-items-center d-flex"
+								class="Form__checkbox m-3 align-items-center d-flex js-sandwich-condiment"
 								tabindex="0"
 								role="checkbox"
 								aria-checked="false"
@@ -496,7 +504,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 							</div>
 
 							<div
-								class="Form__checkbox mx-3 mt-3 align-items-center d-flex disabled"
+								class="Form__checkbox mx-3 mt-3 align-items-center d-flex disabled js-sandwich-condiment"
 								role="checkbox"
 								aria-checked="false"
 								aria-disabled="true"
@@ -939,36 +947,70 @@ input.indeterminate: ${checkbox.$input?.indeterminate}`;
 			});
 
 			// Sandwich condiments
-			const sandwichCondiments = document
-				.querySelector('.js-sandwich-condiments')
-				.querySelectorAll('[role="checkbox"]');
-			const tomatoes = [];
+			const $tomatoParent = document.querySelector('.js-tomato-parent');
+			const tomatoParent = new Checkbox($tomatoParent);
+			const tomatoGroup = new CheckboxGroup(document.querySelector('.js-tomato-varieties'));
 
-			for (let i = 0; i < sandwichCondiments.length; i++) {
-				const $element = sandwichCondiments[i];
-				const checkbox = new Checkbox($element);
+			tomatoParent.init();
+			tomatoGroup.init();
 
-				checkbox.init();
+			const setTomatoVarietiesEnabled = enabled => {
+				tomatoGroup.checkboxes.forEach(checkbox => {
+					if (enabled) {
+						checkbox.el.classList.remove('is-off');
+						checkbox.el.setAttribute('tabindex', '0');
+						checkbox.el.removeAttribute('aria-disabled');
+					} else {
+						checkbox.el.classList.add('is-off');
+						checkbox.el.setAttribute('tabindex', '-1');
+						checkbox.el.setAttribute('aria-disabled', 'true');
+						checkbox.deactivate(false);
+					}
+				});
+			};
 
-				if ($element.classList.contains('js-tomato')) {
-					tomatoes.push(checkbox);
+			const updateTomatoParent = () => {
+				const enabled = tomatoGroup.checkboxes.filter(
+					checkbox => 'true' !== checkbox.el.getAttribute('aria-disabled'),
+				);
+
+				if (0 === enabled.length) {
+					tomatoParent.deactivate(false);
+					return;
 				}
 
+				const checkedCount = enabled.filter(
+					checkbox => 'true' === checkbox.ariaChecked,
+				).length;
+
+				if (0 === checkedCount) {
+					tomatoParent.deactivate(false);
+				} else if (checkedCount === enabled.length) {
+					tomatoParent.activate(false);
+				} else {
+					tomatoParent.mix(false);
+				}
+			};
+
+			tomatoParent.$input.addEventListener('activate', () => {
+				onChange('<strong>Tomato</strong> activated');
+				setTomatoVarietiesEnabled(true);
+				tomatoGroup.checkboxes.forEach(checkbox => checkbox.activate());
+			});
+
+			tomatoParent.$input.addEventListener('deactivate', () => {
+				onChange('<strong>Tomato</strong> deactivated');
+				setTomatoVarietiesEnabled(false);
+			});
+
+			tomatoGroup.checkboxes.forEach(checkbox => {
 				checkbox.$input.addEventListener('activate', event => {
 					const {
 						target: { value },
 					} = event;
 
 					onChange(`<strong>${value}</strong> activated`);
-
-					if ('Tomato' === value) {
-						tomatoes.forEach(tomato => {
-							tomato.el.classList.remove('is-off');
-							tomato.el.setAttribute('tabIndex', '0');
-							tomato.el.removeAttribute('disabled');
-							tomato.activate();
-						});
-					}
+					updateTomatoParent();
 				});
 
 				checkbox.$input.addEventListener('deactivate', event => {
@@ -977,16 +1019,31 @@ input.indeterminate: ${checkbox.$input?.indeterminate}`;
 					} = event;
 
 					onChange(`<strong>${value}</strong> deactivated`);
-
-					if ('Tomato' === value) {
-						tomatoes.forEach(tomato => {
-							tomato.el.classList.add('is-off');
-							tomato.el.setAttribute('tabIndex', '-1');
-							tomato.deactivate();
-						});
-					}
+					updateTomatoParent();
 				});
-			}
+			});
+
+			document.querySelectorAll('.js-sandwich-condiment').forEach($element => {
+				const checkbox = new Checkbox($element);
+
+				checkbox.init();
+
+				checkbox.$input.addEventListener('activate', event => {
+					const {
+						target: { value },
+					} = event;
+
+					onChange(`<strong>${value}</strong> activated`);
+				});
+
+				checkbox.$input.addEventListener('deactivate', event => {
+					const {
+						target: { value },
+					} = event;
+
+					onChange(`<strong>${value}</strong> deactivated`);
+				});
+			});
 
 			// City of splendors — CheckboxGroup + tri-state select all
 			const $cityOfSplendors = document.querySelector('.js-city-of-splendors');

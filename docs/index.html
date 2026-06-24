@@ -82,7 +82,7 @@
 				z-index: 10;
 			}
 		</style>
-		<script type="module" crossorigin src="./assets/index-DVurFxHN.js"></script>
+		<script type="module" crossorigin src="./assets/index-DHlMedES.js"></script>
 	</head>
 
 	<body>
@@ -358,7 +358,8 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 					<p>
 						A <code>role="group"</code> with <code>aria-labelledby</code>, per-item
 						<code>activate</code> / <code>deactivate</code> events, pre-checked and
-						disabled items, and custom logic (Tomato enables nested options).
+						disabled items. Tomato is a tri-state parent over a nested
+						<code>CheckboxGroup</code> of varieties.
 					</p>
 					<div class="border px-3 py-4">
 						<h3 class="mb-3" id="sandwich-condiments-label">Sandwich Condiments</h3>
@@ -369,7 +370,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 							aria-labelledby="sandwich-condiments-label"
 						>
 							<div
-								class="Form__checkbox m-3 align-items-center d-flex"
+								class="Form__checkbox m-3 align-items-center d-flex js-sandwich-condiment"
 								tabindex="0"
 								role="checkbox"
 								aria-checked="false"
@@ -385,78 +386,85 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 								</div>
 							</div>
 
-							<div
-								class="Form__checkbox m-3 align-items-center d-flex"
-								tabindex="0"
-								role="checkbox"
-								aria-checked="false"
-							>
-								<button class="mr-3" type="button" tabindex="-1"></button>Tomato
-								<div class="d-none">
-									<input
-										id="tomato"
-										name="condiments[]"
-										value="Tomato"
-										type="checkbox"
-									/>
+							<div class="m-3">
+								<div
+									class="Form__checkbox align-items-center d-flex js-tomato-parent"
+									tabindex="0"
+									role="checkbox"
+									aria-checked="false"
+									id="tomato"
+								>
+									<button class="mr-3" type="button" tabindex="-1"></button>Tomato
+									<div class="d-none">
+										<input
+											id="tomato-input"
+											name="condiments[]"
+											value="Tomato"
+											type="checkbox"
+										/>
+									</div>
+								</div>
+
+								<div
+									class="js-tomato-varieties border mt-3"
+									role="group"
+									aria-labelledby="tomato"
+								>
+									<div
+										class="Form__checkbox m-3 align-items-center d-flex is-off"
+										role="checkbox"
+										aria-checked="false"
+										aria-disabled="true"
+										tabindex="-1"
+									>
+										<button class="mr-3" type="button" tabindex="-1"></button>Roma
+										<div class="d-none">
+											<input id="roma" name="roma" value="Roma" type="checkbox" />
+										</div>
+									</div>
+
+									<div
+										class="Form__checkbox m-3 align-items-center d-flex is-off"
+										role="checkbox"
+										aria-checked="false"
+										aria-disabled="true"
+										tabindex="-1"
+									>
+										<button class="mr-3" type="button" tabindex="-1"></button
+										>Monterosa
+										<div class="d-none">
+											<input
+												id="monterosa"
+												name="monterosa"
+												value="Monterosa"
+												type="checkbox"
+											/>
+										</div>
+									</div>
+
+									<div
+										class="Form__checkbox m-3 align-items-center d-flex is-off"
+										role="checkbox"
+										aria-checked="false"
+										aria-disabled="true"
+										tabindex="-1"
+									>
+										<button class="mr-3" type="button" tabindex="-1"></button
+										>Beefsteak
+										<div class="d-none">
+											<input
+												id="beefsteak"
+												name="beefsteak"
+												value="Beefsteak"
+												type="checkbox"
+											/>
+										</div>
+									</div>
 								</div>
 							</div>
 
-							<fieldset class="border">
-								<div
-									class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off"
-									tabindex="-1"
-									disabled
-									role="checkbox"
-									aria-checked="false"
-								>
-									<button class="mr-3" type="button" tabindex="-1"></button>Roma
-									<div class="d-none">
-										<input id="roma" name="roma" value="Roma" type="checkbox" />
-									</div>
-								</div>
-
-								<div
-									class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off"
-									tabindex="-1"
-									disabled
-									role="checkbox"
-									aria-checked="false"
-								>
-									<button class="mr-3" type="button" tabindex="-1"></button
-									>Monterosa
-									<div class="d-none">
-										<input
-											id="monterosa"
-											name="monterosa"
-											value="Monterosa"
-											type="checkbox"
-										/>
-									</div>
-								</div>
-
-								<div
-									class="Form__checkbox m-3 align-items-center d-flex js-tomato is-off"
-									tabindex="-1"
-									disabled
-									role="checkbox"
-									aria-checked="false"
-								>
-									<button class="mr-3" type="button" tabindex="-1"></button
-									>Beefsteak
-									<div class="d-none">
-										<input
-											id="beefsteak"
-											name="beefsteak"
-											value="Beefsteak"
-											type="checkbox"
-										/>
-									</div>
-								</div>
-							</fieldset>
-
 							<div
-								class="Form__checkbox m-3 align-items-center d-flex is-selected"
+								class="Form__checkbox m-3 align-items-center d-flex js-sandwich-condiment is-selected"
 								tabindex="0"
 								role="checkbox"
 								aria-checked="true"
@@ -479,7 +487,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 							</div>
 
 							<div
-								class="Form__checkbox m-3 align-items-center d-flex"
+								class="Form__checkbox m-3 align-items-center d-flex js-sandwich-condiment"
 								tabindex="0"
 								role="checkbox"
 								aria-checked="false"
@@ -497,7 +505,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 							</div>
 
 							<div
-								class="Form__checkbox mx-3 mt-3 align-items-center d-flex disabled"
+								class="Form__checkbox mx-3 mt-3 align-items-center d-flex disabled js-sandwich-condiment"
 								role="checkbox"
 								aria-checked="false"
 								aria-disabled="true"
