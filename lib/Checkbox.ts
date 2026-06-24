@@ -1,26 +1,30 @@
-/**
- * Trigger event
- *
- * @param  {HTMLElement} element
- * @param  {string[]} names Events names
- * @return
- */
-const triggerEvents = (element: HTMLElement, names: string[]): void => {
+export type AriaChecked = 'true' | 'false' | 'mixed';
+
+export type CheckboxInputEventName =
+	| 'activate'
+	| 'deactivate'
+	| 'mix'
+	| 'input'
+	| 'change';
+
+const parseAriaChecked = (value: string | null): AriaChecked => {
+	if ('true' === value || 'mixed' === value) {
+		return value;
+	}
+
+	return 'false';
+};
+
+const triggerEvents = (
+	element: HTMLElement,
+	names: readonly CheckboxInputEventName[],
+): void => {
 	names.forEach(name => element.dispatchEvent(new Event(name, { bubbles: true })));
 };
 
-const focus = (target: HTMLElement): void => target.classList.add('is-focus');
-const blur = (target: HTMLElement): void => target.classList.remove('is-focus');
+const setFocusClass = (target: HTMLElement): void => target.classList.add('is-focus');
+const removeFocusClass = (target: HTMLElement): void => target.classList.remove('is-focus');
 
-export type AriaChecked = 'true' | 'false' | 'mixed';
-
-/**
- * Class Checkbox
- *
- * @param {HTMLElement} el HTML element.
- *
- * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
- */
 export default class Checkbox {
 	el: HTMLElement;
 	$input: HTMLInputElement | null = null;
@@ -30,7 +34,7 @@ export default class Checkbox {
 	}
 
 	get ariaChecked(): AriaChecked {
-		return (this.el.getAttribute('aria-checked') ?? 'false') as AriaChecked;
+		return parseAriaChecked(this.el.getAttribute('aria-checked'));
 	}
 
 	get checked(): boolean {
@@ -41,20 +45,15 @@ export default class Checkbox {
 		return 'true' === this.el.getAttribute('aria-disabled');
 	}
 
-	init(): void | null {
-		if (null === this.el) {
-			return null;
-		}
-
-		this.$input = this.el.querySelector('input');
+	init(): void {
+		this.$input = this.el.querySelector<HTMLInputElement>('input');
 
 		if (!this.el.hasAttribute('aria-checked')) {
 			this.el.setAttribute('aria-checked', 'false');
 		}
 
 		this.sync();
-
-		return this.initEvents();
+		this.initEvents();
 	}
 
 	/** Apply HTML attributes to classes and the native input. */
@@ -79,31 +78,27 @@ export default class Checkbox {
 	initEvents(): void {
 		this.el.addEventListener('keydown', this.handleKeydown);
 		this.el.addEventListener('click', this.handleClick);
-		this.el.addEventListener('blur', () => blur(this.el));
-		this.el.addEventListener('focus', () => focus(this.el));
+		this.el.addEventListener('blur', () => removeFocusClass(this.el));
+		this.el.addEventListener('focus', () => setFocusClass(this.el));
 	}
 
-	handleClick = (): void | null => this.toggle();
-
-	handleKeydown = (event: KeyboardEvent): any => {
-		const { key, code } = event;
-
-		const codes: any = {
-			Space: () => {
-				this.toggle();
-
-				event.stopPropagation();
-				event.preventDefault();
-			},
-			default: () => false,
-		};
-
-		return (codes[key || code] || codes.default)();
+	handleClick = (): void => {
+		this.toggle();
 	};
 
-	toggle(): void | null {
+	handleKeydown = (event: KeyboardEvent): void => {
+		if (' ' !== event.key && 'Space' !== event.code) {
+			return;
+		}
+
+		event.preventDefault();
+		event.stopPropagation();
+		this.toggle();
+	};
+
+	toggle(): void {
 		if (this.disabled) {
-			return null;
+			return;
 		}
 
 		if ('true' === this.ariaChecked) {
@@ -112,16 +107,11 @@ export default class Checkbox {
 			this.activate();
 		}
 
-		return this.$input ? triggerEvents(this.$input, ['input', 'change']) : null;
+		if (this.$input) {
+			triggerEvents(this.$input, ['input', 'change']);
+		}
 	}
 
-	/**
-	 * Checkbox.activate
-	 *
-	 * @param {boolean} trigger Whether or not the event should be trigger.
-	 *
-	 * @return	{boolean}
-	 */
 	activate(trigger: boolean = true): boolean {
 		if (this.disabled || 'true' === this.ariaChecked) {
 			return false;
@@ -137,13 +127,6 @@ export default class Checkbox {
 		return true;
 	}
 
-	/**
-	 * Checkbox.deactivate
-	 *
-	 * @param {boolean} trigger Whether or not the event should be trigger.
-	 *
-	 * @return	{boolean}
-	 */
 	deactivate(trigger: boolean = true): boolean {
 		if (this.disabled || 'false' === this.ariaChecked) {
 			return false;
@@ -159,13 +142,6 @@ export default class Checkbox {
 		return true;
 	}
 
-	/**
-	 * Checkbox.mix
-	 *
-	 * @param {boolean} trigger Whether or not the event should be trigger.
-	 *
-	 * @return	{boolean}
-	 */
 	mix(trigger: boolean = true): boolean {
 		if (this.disabled || 'mixed' === this.ariaChecked) {
 			return false;

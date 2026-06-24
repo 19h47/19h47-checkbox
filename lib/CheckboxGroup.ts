@@ -1,32 +1,20 @@
 import Checkbox from './Checkbox';
 
-/**
- * Class CheckboxGroup
- *
- * @param {HTMLElement} el HTML element.
- *
- * @property {HTMLElement} el HTML element.
- * @property {Checkbox[]} checkboxes Array of Checkbox.
- * @property {EventTarget | null} lastChecked Last checked target.
- *
- * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
- */
 export default class CheckboxGroup {
 	el: HTMLElement;
 	checkboxes: Checkbox[] = [];
-	lastChecked: EventTarget | null = null;
+	lastChecked: HTMLElement | null = null;
 
-	/**
-	 *
-	 * @param {HTMLElement} el
-	 */
 	constructor(el: HTMLElement) {
 		this.el = el;
 	}
 
 	init(): void {
-		this.checkboxes = [...this.el.querySelectorAll('[role="checkbox"]')].map($element => {
-			const checkbox = new Checkbox($element as HTMLElement);
+		this.checkboxes = Array.from(
+			this.el.querySelectorAll<HTMLElement>('[role="checkbox"]'),
+		).map($element => {
+			const checkbox = new Checkbox($element);
+
 			checkbox.init();
 
 			return checkbox;
@@ -44,7 +32,11 @@ export default class CheckboxGroup {
 	handleCheck = (event: MouseEvent): void => {
 		const { currentTarget, shiftKey } = event;
 
-		const checked = 'true' === (currentTarget as HTMLElement)?.getAttribute('aria-checked');
+		if (!(currentTarget instanceof HTMLElement)) {
+			return;
+		}
+
+		const checked = 'true' === currentTarget.getAttribute('aria-checked');
 
 		let inBetween = false;
 
@@ -54,7 +46,6 @@ export default class CheckboxGroup {
 
 				if (el === currentTarget || el === this.lastChecked) {
 					inBetween = !inBetween;
-					// console.log('Starting to check them in between!');
 				}
 
 				if (inBetween) {

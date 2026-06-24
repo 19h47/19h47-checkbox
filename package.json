@@ -1,6 +1,6 @@
 {
 	"name": "@19h47/checkbox",
-	"version": "6.0.0",
+	"version": "6.1.0",
 	"description": "Custom checkbox element with accessibility in mind",
 	"keywords": [
 		"checkbox",
@@ -24,15 +24,17 @@
 	],
 	"main": "./dist/checkbox.umd.cjs",
 	"module": "./dist/checkbox.js",
+	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
+			"types": "./dist/index.d.ts",
 			"import": "./dist/checkbox.js",
 			"require": "./dist/checkbox.umd.cjs"
 		}
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build && vite build --config vite.config.docs.js",
+		"build": "vite build && tsc -p tsconfig.build.json && vite build --config vite.config.docs.js",
 		"build:docs": "vite build --config vite.config.docs.js",
 		"deploy": "pnpm login && pnpm run build && pnpm publish --access public --no-git-checks"
 	},
