@@ -1,23 +1,8 @@
 {
 	"compilerOptions": {
-		"target": "ES2018",
-		"module": "ESNext",
-		"moduleResolution": "Node",
-		"lib": ["ESNext", "ESNext.AsyncIterable", "DOM", "DOM.iterable"],
 		"esModuleInterop": true,
-		"allowJs": true,
-		"sourceMap": true,
 		"strict": true,
-		"noEmit": false,
-		"experimentalDecorators": true,
-		"baseUrl": ".",
-		"paths": {
-			"~/*": ["./*"],
-			"@/*": ["./*"]
-		},
-		"types": ["@types/node"],
-		"forceConsistentCasingInFileNames": true,
-		"resolveJsonModule": true
+		"lib": ["ESNext", "DOM"]
 	},
-	"exclude": ["webpack", "node_modules", "dist", "docs"],
+	"exclude": ["node_modules", "dist", "docs"]
 }

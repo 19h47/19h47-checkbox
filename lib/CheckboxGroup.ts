@@ -44,9 +44,7 @@ export default class CheckboxGroup {
 	handleCheck = (event: MouseEvent): void => {
 		const { currentTarget, shiftKey } = event;
 
-		const checked = JSON.parse(
-			(currentTarget as HTMLElement)?.getAttribute('aria-checked') as string,
-		);
+		const checked = 'true' === (currentTarget as HTMLElement)?.getAttribute('aria-checked');
 
 		let inBetween = false;
 

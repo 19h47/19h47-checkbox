@@ -3,7 +3,7 @@
 ## Install
 
 ```
-yarn add @19h47/checkbox
+pnpm add @19h47/checkbox
 ```
 
 ## HTML
@@ -46,13 +46,16 @@ checkbox.init();
 |            | `tabindex="0"`         | `div`   | Includes the checkbox in the page tab sequence.                                                                                                          |
 |            | `aria-checked="false"` | `div`   | Indicates the `checkbox` is **not** checked.                                                                                                             |
 |            | `aria-checked="true"`  | `div`   | Indicates the `checkbox` is checked.                                                                                                                     |
+|            | `aria-checked="mixed"` | `div`   | Indicates the `checkbox` is partially checked.                                                                                                           |
+|            | `aria-disabled="true"` | `div`   | Indicates the `checkbox` is disabled.                                                                                                                    |
 
 ## Methods
 
-| Method         | Description             | Arguments                                                                          |
-| -------------- | ----------------------- | ---------------------------------------------------------------------------------- |
-| `activate()`   | Activate the checkbox   | `trigger` (optional) Whether or not the event should be trigger. Default to `true` |
-| `deactivate()` | Deactivate the checkbox | `trigger` (optional) Whether or not the event should be trigger. Default to `true` |
+| Method         | Description                              | Arguments                                                                          |
+| -------------- | ---------------------------------------- | ---------------------------------------------------------------------------------- |
+| `activate()`   | Set `aria-checked="true"` on the element   | `trigger` (optional) Whether or not the event should be trigger. Default to `true` |
+| `deactivate()` | Set `aria-checked="false"` on the element  | `trigger` (optional) Whether or not the event should be trigger. Default to `true` |
+| `mix()`        | Set `aria-checked="mixed"` on the element  | `trigger` (optional) Whether or not the event should be trigger. Default to `true` |
 
 ```javascript
 import Checkbox from '@19h47/checkbox';
@@ -106,6 +109,18 @@ checkbox.$input.addEventListener('deactivate', event => {
 });
 ```
 
+### Mix
+
+```javascript
+checkbox.$input.addEventListener('mix', event => {
+	const {
+		target: { value },
+	} = event;
+
+	console.log(value);
+});
+```
+
 ## CheckboxGroup
 
 The `CheckboxGroup` is a wrapper class around `Checkbox`.
@@ -156,7 +171,13 @@ checkbox.init();
 
 ## Example
 
-An example is located right [here](https://19h47.github.io/19h47-checkbox/), see [sources](https://github.com/19h47/19h47-checkbox/blob/main/index.html).
+An interactive demo covering every API surface is at [19h47.github.io/19h47-checkbox](https://19h47.github.io/19h47-checkbox/) ([sources](https://github.com/19h47/19h47-checkbox/blob/main/index.html)):
+
+- HTML states (`aria-checked`, `aria-disabled`, `aria-label`, `aria-labelledby`, `aria-describedby`)
+- Methods (`activate`, `deactivate`, `mix`, `sync`) and getters
+- Events (`activate`, `deactivate`, `mix`, `input`, `change`)
+- Keyboard support (`Tab`, `Space`)
+- Groups, conditional logic, `CheckboxGroup`, tri-state select all, shift selection
 
 ## References
 

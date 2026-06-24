@@ -1,46 +1,46 @@
 {
 	"name": "@19h47/checkbox",
-	"version": "5.0.5",
+	"version": "6.0.0",
 	"description": "Custom checkbox element with accessibility in mind",
-	"main": "dist/main.js",
-	"scripts": {
-		"deploy": "npm login && npm run build && npm publish",
-		"dev": "webpack --mode=development --config webpack/webpack.config.js",
-		"build": "webpack --mode=production --config webpack/webpack.config.js",
-		"serve": "webpack-dev-server --mode=development --hot --config webpack/webpack.config.js"
+	"keywords": [
+		"checkbox",
+		"accessibility",
+		"a11y",
+		"ES6"
+	],
+	"homepage": "https://github.com/19h47/19h47-checkbox#readme",
+	"bugs": {
+		"url": "https://github.com/19h47/19h47-checkbox/issues"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/19h47/19h47-checkbox.git"
 	},
-	"keywords": [
-		"checkbox",
-		"ES6"
-	],
-	"author": "Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)",
 	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/19h47/19h47-checkbox/issues"
+	"author": "Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)",
+	"type": "module",
+	"files": [
+		"dist"
+	],
+	"main": "./dist/checkbox.umd.cjs",
+	"module": "./dist/checkbox.js",
+	"exports": {
+		".": {
+			"import": "./dist/checkbox.js",
+			"require": "./dist/checkbox.umd.cjs"
+		}
 	},
-	"homepage": "https://github.com/19h47/19h47-checkbox#readme",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build && vite build --config vite.config.docs.js",
+		"build:docs": "vite build --config vite.config.docs.js",
+		"deploy": "pnpm login && pnpm run build && pnpm publish --access public --no-git-checks"
+	},
 	"devDependencies": {
 		"@19h47/prettier-config": "^2.0.0",
-		"clean-webpack-plugin": "^4.0.0",
-		"copy-webpack-plugin": "^12.0.2",
-		"eslint": "^8.56.0",
-		"eslint-config-airbnb-base": "^15.0.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-import-resolver-webpack": "^0.13.8",
-		"eslint-plugin-import": "^2.29.1",
-		"eslint-webpack-plugin": "^4.0.1",
-		"html-webpack-plugin": "5.6.0",
 		"prettier": "^3.2.5",
-		"ts-loader": "^9.5.1",
-		"typescript": "^5.3.3",
-		"webpack": "^5.90.1",
-		"webpack-cli": "^5.0.1",
-		"webpack-dev-server": "^5.0.0",
-		"webpack-merge": "^5.10.0",
-		"webpack-notifier": "^1.15.0"
-	}
+		"typescript": "^5.8.3",
+		"vite": "^6.2.2"
+	},
+	"packageManager": "pnpm@10.12.1"
 }

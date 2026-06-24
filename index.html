@@ -45,11 +45,33 @@
 				transform: scale(1);
 			}
 
+			.Form__checkbox.is-mixed button:after {
+				background-color: black;
+				transform: scale(0.5);
+			}
+
+			.Form__checkbox.is-focus button {
+				outline: 2px solid #007bff;
+				outline-offset: 2px;
+			}
+
 			.Form__checkbox.is-off,
 			.Form__checkbox[disabled],
 			.Form__checkbox[aria-disabled] {
 				opacity: 0.3;
 				pointer-events: none;
+			}
+
+			.EventLog {
+				font-family: monospace;
+				font-size: 0.85rem;
+				max-height: 10rem;
+				overflow-y: auto;
+			}
+
+			.StatePanel {
+				font-family: monospace;
+				font-size: 0.85rem;
 			}
 
 			.Alert {
@@ -68,52 +90,282 @@
 		<div class="container">
 			<div class="row my-5">
 				<div class="col-12">
-					<h1 class="m-0">
+					<h1 class="m-0 mb-3">
 						<a href="https://github.com/19h47/19h47-checkbox">Checkbox</a>
 					</h1>
+					<nav class="small">
+						<a href="#html-states">HTML states</a> ·
+						<a href="#api">API</a> ·
+						<a href="#keyboard">Keyboard</a> ·
+						<a href="#sandwich-condiments">Group</a> ·
+						<a href="#city-of-splendors">CheckboxGroup</a>
+					</nav>
 				</div>
 			</div>
 			<div class="row my-5">
 				<div class="col-12">
+					<h2 class="h4 mb-3">Getting started</h2>
 					<p>
-						The plugin doesn't provided any style out of the box. You can do whatever
-						you want.
+						The plugin doesn't provide any style out of the box. Styles below are for
+						demo purposes only (<a
+							href="https://getbootstrap.com/"
+							target="_blank"
+							rel="noreferer noopener"
+							>Bootstrap</a
+						>).
 					</p>
 					<p>
-						We used
-						<a href="https://getbootstrap.com/" target="_blank" rel="noreferer noopener"
-							>Boostrap</a
-						>
-						here for instance.
+						<strong>HTML is the source of truth.</strong> Set
+						<code>aria-checked</code>, <code>aria-disabled</code> and related
+						attributes in the markup; the library reads them on <code>init()</code> and
+						propagates them to classes and the native input via <code>sync()</code>.
+					</p>
+					<p>
+						Pattern reference:
+						<a
+							href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/"
+							target="_blank"
+							rel="noopener"
+							>W3C Checkbox Pattern</a
+						>.
 					</p>
 					<pre
 						class="p-3 mt-0 mb-3"
-					><code class="language-html">&lt;div role=&quot;checkbox&quot; aria-checked=&quot;false&quot;&gt;
-	&lt;button type=&quot;button&quot; tabindex=&quot;-1&quot;&gt;Do you want to click me?&lt;/button&gt;
+					><code class="language-html">&lt;div role=&quot;checkbox&quot; aria-checked=&quot;false&quot; tabindex=&quot;0&quot;&gt;
+	&lt;button type=&quot;button&quot; tabindex=&quot;-1&quot;&gt;&lt;/button&gt;
+	Label text
 	&lt;div style=&quot;display: none;&quot;&gt;
-		&lt;input id=&quot;option&quot; name=&quot;option&quot; value=&quot;false&quot; type=&quot;checkbox&quot; /&gt;
+		&lt;input name=&quot;option&quot; value=&quot;option&quot; type=&quot;checkbox&quot; /&gt;
 	&lt;/div&gt;
 &lt;/div&gt;</code></pre>
 					<pre
 						class="p-3 mb-0 mt-3"
 					><code class="language-javascript">import Checkbox from '@19h47/checkbox';
 
-const $checkbox = document.querySelector('[role="checkbox"]');
-const checkbox = new Checkbox($checkbox);
+const checkbox = new Checkbox(document.querySelector('[role="checkbox"]'));
 
 checkbox.init();</code></pre>
 				</div>
 			</div>
 
-			<div class="row my-5">
+			<div class="row my-5" id="html-states">
 				<div class="col-12">
+					<h2 class="h4 mb-3">HTML states</h2>
+					<p>
+						All states are declared in HTML. After <code>init()</code>, classes
+						(<code>is-selected</code>, <code>is-mixed</code>) and the native input
+						mirror <code>aria-checked</code>.
+					</p>
+					<div class="border px-3 py-4 js-html-states">
+						<div
+							class="Form__checkbox m-3 align-items-center d-flex"
+							tabindex="0"
+							role="checkbox"
+							aria-checked="false"
+						>
+							<button class="mr-3" type="button" tabindex="-1"></button>
+							<code>aria-checked="false"</code>
+							<div class="d-none">
+								<input name="state-false" value="false" type="checkbox" />
+							</div>
+						</div>
+						<div
+							class="Form__checkbox m-3 align-items-center d-flex"
+							tabindex="0"
+							role="checkbox"
+							aria-checked="true"
+						>
+							<button class="mr-3" type="button" tabindex="-1"></button>
+							<code>aria-checked="true"</code>
+							<div class="d-none">
+								<input name="state-true" value="true" type="checkbox" checked />
+							</div>
+						</div>
+						<div
+							class="Form__checkbox m-3 align-items-center d-flex"
+							tabindex="0"
+							role="checkbox"
+							aria-checked="mixed"
+						>
+							<button class="mr-3" type="button" tabindex="-1"></button>
+							<code>aria-checked="mixed"</code>
+							<div class="d-none">
+								<input name="state-mixed" value="mixed" type="checkbox" />
+							</div>
+						</div>
+						<div
+							class="Form__checkbox m-3 align-items-center d-flex"
+							role="checkbox"
+							aria-checked="false"
+							aria-disabled="true"
+							tabindex="-1"
+						>
+							<button class="mr-3" type="button" tabindex="-1"></button>
+							<code>aria-disabled="true"</code>
+							<div class="d-none">
+								<input name="state-disabled" value="disabled" type="checkbox" />
+							</div>
+						</div>
+						<div
+							class="Form__checkbox m-3 align-items-center d-flex"
+							tabindex="0"
+							role="checkbox"
+							aria-checked="false"
+							aria-label="Subscribe to the newsletter"
+						>
+							<button class="mr-3" type="button" tabindex="-1"></button>
+							<code>aria-label</code> (no visible label text)
+							<div class="d-none">
+								<input
+									name="state-aria-label"
+									value="newsletter"
+									type="checkbox"
+								/>
+							</div>
+						</div>
+						<div class="m-3">
+							<p id="terms-desc" class="small text-muted mb-2">
+								By checking you agree to the terms of service.
+							</p>
+							<div
+								class="Form__checkbox align-items-center d-flex"
+								tabindex="0"
+								role="checkbox"
+								aria-checked="false"
+								aria-labelledby="terms-label"
+								aria-describedby="terms-desc"
+							>
+								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span id="terms-label">Terms of service</span>
+								<div class="d-none">
+									<input name="state-terms" value="terms" type="checkbox" />
+								</div>
+							</div>
+							<p class="small text-muted mt-1 mb-0">
+								Uses <code>aria-labelledby</code> +
+								<code>aria-describedby</code>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row my-5" id="api">
+				<div class="col-12">
+					<h2 class="h4 mb-3">Methods, getters &amp; events</h2>
+					<p>
+						<code>activate()</code>, <code>deactivate()</code> and
+						<code>mix()</code> write to the HTML. Pass <code>false</code> to skip
+						custom events (<code>activate</code>, <code>deactivate</code>,
+						<code>mix</code>). User interaction also fires native
+						<code>input</code> and <code>change</code> on the hidden input.
+					</p>
 					<div class="border px-3 py-4">
-						<h3 class="mb-3" id="sandwich-condiments">Sandwich Condiments</h3>
+						<div
+							class="Form__checkbox m-3 align-items-center d-flex js-api-checkbox"
+							tabindex="0"
+							role="checkbox"
+							aria-checked="false"
+						>
+							<button class="mr-3" type="button" tabindex="-1"></button>
+							API playground
+							<div class="d-none">
+								<input
+									id="api-playground"
+									name="api-playground"
+									value="playground"
+									type="checkbox"
+								/>
+							</div>
+						</div>
+						<div class="m-3">
+							<button type="button" class="btn btn-sm btn-outline-secondary js-api-activate">
+								activate()
+							</button>
+							<button type="button" class="btn btn-sm btn-outline-secondary js-api-deactivate">
+								deactivate()
+							</button>
+							<button type="button" class="btn btn-sm btn-outline-secondary js-api-mix">
+								mix()
+							</button>
+							<button type="button" class="btn btn-sm btn-outline-secondary js-api-sync">
+								sync()
+							</button>
+							<button type="button" class="btn btn-sm btn-outline-secondary js-api-set-mixed">
+								Set <code>aria-checked="mixed"</code> in HTML
+							</button>
+						</div>
+						<div class="m-3 StatePanel js-api-state border p-2 bg-light"></div>
+						<div class="m-3">
+							<p class="small mb-1"><strong>Event log</strong></p>
+							<div class="EventLog border p-2 bg-light js-api-log"></div>
+						</div>
+					</div>
+					<pre class="p-3 mt-3 mb-0"><code class="language-javascript">checkbox.activate();           // aria-checked="true"
+checkbox.deactivate();         // aria-checked="false"
+checkbox.mix();                // aria-checked="mixed"
+checkbox.deactivate(false);    // no deactivate event
+checkbox.sync();                 // re-apply HTML → classes & input
+
+checkbox.ariaChecked; // "true" | "false" | "mixed"
+checkbox.checked;     // boolean
+checkbox.disabled;    // boolean
+
+checkbox.$input.addEventListener('activate', …);
+checkbox.$input.addEventListener('deactivate', …);
+checkbox.$input.addEventListener('mix', …);
+checkbox.$input.addEventListener('input', …);
+checkbox.$input.addEventListener('change', …);</code></pre>
+				</div>
+			</div>
+
+			<div class="row my-5" id="keyboard">
+				<div class="col-12">
+					<h2 class="h4 mb-3">Keyboard support</h2>
+					<table class="table table-sm table-bordered">
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Function</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><kbd>Tab</kbd></td>
+								<td>Moves focus to the checkbox (<code>tabindex="0"</code>)</td>
+							</tr>
+							<tr>
+								<td><kbd>Space</kbd></td>
+								<td>
+									Toggles state. From <code>mixed</code> or
+									<code>false</code> → <code>true</code>; from
+									<code>true</code> → <code>false</code>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<p class="small text-muted mb-0">
+						Focus adds the <code>is-focus</code> class (styled above). Disabled
+						checkboxes ignore click and Space.
+					</p>
+				</div>
+			</div>
+
+			<div class="row my-5" id="sandwich-condiments">
+				<div class="col-12">
+					<h2 class="h4 mb-3">Group, events &amp; conditional logic</h2>
+					<p>
+						A <code>role="group"</code> with <code>aria-labelledby</code>, per-item
+						<code>activate</code> / <code>deactivate</code> events, pre-checked and
+						disabled items, and custom logic (Tomato enables nested options).
+					</p>
+					<div class="border px-3 py-4">
+						<h3 class="mb-3" id="sandwich-condiments-label">Sandwich Condiments</h3>
 
 						<div
 							class="js-sandwich-condiments"
 							role="group"
-							aria-labelledby="sandwich-condiments"
+							aria-labelledby="sandwich-condiments-label"
 						>
 							<div
 								class="Form__checkbox m-3 align-items-center d-flex"
@@ -267,23 +519,25 @@ checkbox.init();</code></pre>
 				</div>
 			</div>
 
-			<div class="row my-5">
+			<div class="row my-5" id="city-of-splendors">
 				<div class="col-12">
-					<pre
-						class="p-3 m-0"
-					><code class="language-javascript">import { CheckboxGroup } from '@19h47/checkbox';
+					<h2 class="h4 mb-3">CheckboxGroup, tri-state &amp; shift selection</h2>
+					<p>
+						<code>CheckboxGroup</code> initializes every
+						<code>[role="checkbox"]</code> inside a container. Hold
+						<kbd>Shift</kbd> and click a second checked item to activate all
+						checkboxes in between. The parent « Select All » checkbox uses
+						<code>mix(false)</code> / <code>activate(false)</code> /
+						<code>deactivate(false)</code> to reflect the group without event loops.
+					</p>
+					<pre class="p-3 mb-3"><code class="language-javascript">import { CheckboxGroup } from '@19h47/checkbox';
 
-const $element = document.querySelector('[role="group"]');
-const checkboxgroup = new CheckboxGroup($element);
+const checkboxgroup = new CheckboxGroup(document.querySelector('.js-city-of-splendors'));
 
-checkbox.init();</code></pre>
-				</div>
-			</div>
-
-			<div class="row my-5">
-				<div class="col-12">
+checkboxgroup.init();
+// checkboxgroup.checkboxes → Checkbox[]</code></pre>
 					<div class="border px-3 py-4">
-						<h3 class="mb-3" id="city-of-splendors">City of Splendors</h3>
+						<h3 class="mb-3" id="city-of-splendors-label">City of Splendors</h3>
 
 						<div class="border my-3">
 							<div
@@ -308,7 +562,7 @@ checkbox.init();</code></pre>
 						<div
 							class="js-city-of-splendors mt-3"
 							role="group"
-							aria-labelledby="city-of-splendors"
+							aria-labelledby="city-of-splendors-label"
 						>
 							<div
 								class="Form__checkbox mx-3 mb-3 align-items-center d-flex"
@@ -582,8 +836,9 @@ checkbox.init();</code></pre>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
-		<script src="main.js"></script>
-		<script>
+		<script type="module">
+			import Checkbox, { CheckboxGroup } from './lib/index.ts';
+
 			const alert = content => {
 				const div = document.createElement('div');
 
@@ -613,16 +868,77 @@ checkbox.init();</code></pre>
 				setTimeout(() => $el.parentNode.removeChild($el), 2000);
 			};
 
-			//
-			const $cityOfSplendors = document.querySelector('.js-city-of-splendors');
-			const $selectAll = document.querySelector('.js-select-all');
+			const logEvent = ($log, name, value = '') => {
+				const line = document.createElement('div');
 
-			const checkboxgroup = new Checkbox.CheckboxGroup($cityOfSplendors);
-			const selectAll = new Checkbox.default($selectAll);
+				line.textContent = value
+					? `[${name}] value="${value}"`
+					: `[${name}]`;
 
-			checkboxgroup.init();
-			selectAll.init();
+				$log.prepend(line);
+			};
 
+			const renderState = (checkbox, $panel) => {
+				$panel.innerHTML = `ariaChecked: "${checkbox.ariaChecked}"
+checked: ${checkbox.checked}
+disabled: ${checkbox.disabled}
+input.checked: ${checkbox.$input?.checked}
+input.indeterminate: ${checkbox.$input?.indeterminate}`;
+			};
+
+			// HTML states — init only, no extra logic
+			document
+				.querySelectorAll('.js-html-states [role="checkbox"]')
+				.forEach($element => new Checkbox($element).init());
+
+			// API playground
+			const $apiCheckbox = document.querySelector('.js-api-checkbox');
+			const apiCheckbox = new Checkbox($apiCheckbox);
+			const $apiState = document.querySelector('.js-api-state');
+			const $apiLog = document.querySelector('.js-api-log');
+
+			apiCheckbox.init();
+			renderState(apiCheckbox, $apiState);
+
+			['activate', 'deactivate', 'mix', 'input', 'change'].forEach(name => {
+				apiCheckbox.$input.addEventListener(name, event => {
+					logEvent($apiLog, name, event.target.value);
+					renderState(apiCheckbox, $apiState);
+				});
+			});
+
+			apiCheckbox.el.addEventListener('focus', () => renderState(apiCheckbox, $apiState));
+			apiCheckbox.el.addEventListener('blur', () => renderState(apiCheckbox, $apiState));
+
+			document.querySelector('.js-api-activate').addEventListener('click', () => {
+				apiCheckbox.activate();
+				renderState(apiCheckbox, $apiState);
+			});
+
+			document.querySelector('.js-api-deactivate').addEventListener('click', () => {
+				apiCheckbox.deactivate();
+				renderState(apiCheckbox, $apiState);
+			});
+
+			document.querySelector('.js-api-mix').addEventListener('click', () => {
+				apiCheckbox.mix();
+				renderState(apiCheckbox, $apiState);
+			});
+
+			document.querySelector('.js-api-sync').addEventListener('click', () => {
+				apiCheckbox.sync();
+				logEvent($apiLog, 'sync');
+				renderState(apiCheckbox, $apiState);
+			});
+
+			document.querySelector('.js-api-set-mixed').addEventListener('click', () => {
+				apiCheckbox.el.setAttribute('aria-checked', 'mixed');
+				apiCheckbox.sync();
+				logEvent($apiLog, 'HTML set aria-checked="mixed"');
+				renderState(apiCheckbox, $apiState);
+			});
+
+			// Sandwich condiments
 			const sandwichCondiments = document
 				.querySelector('.js-sandwich-condiments')
 				.querySelectorAll('[role="checkbox"]');
@@ -630,7 +946,7 @@ checkbox.init();</code></pre>
 
 			for (let i = 0; i < sandwichCondiments.length; i++) {
 				const $element = sandwichCondiments[i];
-				const checkbox = new Checkbox.default($element);
+				const checkbox = new Checkbox($element);
 
 				checkbox.init();
 
@@ -643,7 +959,7 @@ checkbox.init();</code></pre>
 						target: { value },
 					} = event;
 
-					onChange(`<strong>${value}</strong> has been activated!`);
+					onChange(`<strong>${value}</strong> activated`);
 
 					if ('Tomato' === value) {
 						tomatoes.forEach(tomato => {
@@ -660,7 +976,7 @@ checkbox.init();</code></pre>
 						target: { value },
 					} = event;
 
-					onChange(`<strong>${value}</strong> has been deactivated!`);
+					onChange(`<strong>${value}</strong> deactivated`);
 
 					if ('Tomato' === value) {
 						tomatoes.forEach(tomato => {
@@ -672,40 +988,58 @@ checkbox.init();</code></pre>
 				});
 			}
 
+			// City of splendors — CheckboxGroup + tri-state select all
+			const $cityOfSplendors = document.querySelector('.js-city-of-splendors');
+			const $selectAll = document.querySelector('.js-select-all');
+
+			const checkboxgroup = new CheckboxGroup($cityOfSplendors);
+			const selectAll = new Checkbox($selectAll);
+
+			checkboxgroup.init();
+			selectAll.init();
+
+			const updateSelectAll = () => {
+				const siblings = checkboxgroup.checkboxes.filter(
+					checkbox => 'true' !== checkbox.el.getAttribute('aria-disabled'),
+				);
+				const checkedCount = siblings.filter(
+					checkbox => 'true' === checkbox.ariaChecked,
+				).length;
+
+				if (0 === checkedCount) {
+					selectAll.deactivate(false);
+				} else if (checkedCount === siblings.length) {
+					selectAll.activate(false);
+				} else {
+					selectAll.mix(false);
+				}
+			};
+
 			checkboxgroup.checkboxes.forEach(checkbox => {
 				checkbox.$input.addEventListener('activate', event => {
 					const {
 						target: { value },
 					} = event;
 
-					onChange(`<strong>${value}</strong> has been activated!`);
-
-					if (checkboxgroup.checkboxes.every(checkbox => checkbox.$input.checked)) {
-						selectAll.activate(false);
-					}
+					onChange(`<strong>${value}</strong> activated`);
+					updateSelectAll();
 				});
+
 				checkbox.$input.addEventListener('deactivate', event => {
 					const {
 						target: { value },
 					} = event;
 
-					onChange(`<strong>${value}</strong> has been deactivated!`);
-
-					console.log(
-						checkboxgroup.checkboxes.every(checkbox => checkbox.$input.checked),
-					);
-
-					if (!checkboxgroup.checkboxes.every(checkbox => checkbox.$input.checked)) {
-						selectAll.deactivate(false);
-					}
+					onChange(`<strong>${value}</strong> deactivated`);
+					updateSelectAll();
 				});
 			});
 
-			selectAll.$input.addEventListener('activate', event => {
+			selectAll.$input.addEventListener('activate', () => {
 				checkboxgroup.checkboxes.forEach(checkbox => checkbox.activate());
 			});
 
-			selectAll.$input.addEventListener('deactivate', event => {
+			selectAll.$input.addEventListener('deactivate', () => {
 				checkboxgroup.checkboxes.forEach(checkbox => checkbox.deactivate());
 			});
 		</script>
