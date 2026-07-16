@@ -4,7 +4,7 @@
 
 # @19h47/checkbox
 
-Custom checkbox behaviour for UIs where a native `<input type="checkbox">` is awkward to style or compose (selectable cards, dense layouts, mixed-state parents). **Not a replacement for native checkboxes** in ordinary forms — prefer those whenever you can.
+Custom checkbox behaviour for UIs where checkboxes must stay in sync through **JavaScript orchestration** — tri-state parents (`aria-checked="mixed"`), conditional nested groups, shift selection — while HTML remains the source of truth. **Not a replacement for native checkboxes** in ordinary forms: a `<label>` + `<input type="checkbox">` is enough when rows are independent.
 
 ## Install
 
@@ -168,6 +168,18 @@ checkbox.$input.addEventListener('mix', event => {
 });
 ```
 
+## When to use
+
+Reach for this library when relationships between checkboxes are **computed in JavaScript**:
+
+- a **tri-state parent** (`mixed`) reflects a squad list and drives it on activate/deactivate
+- a **nested group** is enabled, disabled, or partially checked depending on a parent
+- **live counters** (squads, units, upkeep vs. budget) must stay in sync with every toggle
+
+A `<label>` per row cannot express `aria-checked="mixed"` as a control, nor orchestrate siblings without custom code.
+
+See the [interactive demo](https://19h47.github.io/19h47-checkbox/#when-to-use) — *Undermountain expedition roster* — for a full consumer-side wiring example (`updateRecruitAll`, nested Quaggoth patrol, `CheckboxGroup`).
+
 ## CheckboxGroup
 
 The `CheckboxGroup` is a wrapper class around `Checkbox`.
@@ -214,7 +226,7 @@ checkboxgroup.init();
 
 An interactive demo covering every API surface is at [19h47.github.io/19h47-checkbox](https://19h47.github.io/19h47-checkbox/) ([sources](https://github.com/19h47/19h47-checkbox/blob/main/index.html)):
 
-- When to use: selectable cards (whole tile as checkbox)
+- When to use: expedition roster (tri-state parent, nested group, JS orchestration)
 - HTML states (`aria-checked`, `aria-disabled`, `aria-label`, `aria-labelledby`, `aria-describedby`)
 - Methods (`activate`, `deactivate`, `mix`, `sync`, `destroy`) and getters
 - Events (`activate`, `deactivate`, `mix`, `input`, `change`)

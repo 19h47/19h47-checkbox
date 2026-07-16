@@ -89,49 +89,66 @@
 				z-index: 10;
 			}
 
-			.SelectableCard {
-				cursor: pointer;
+			.ExpeditionSummary {
+				font-family: monospace;
+				font-size: 0.85rem;
+			}
+
+			.ExpeditionUnit {
 				border: 1px solid #dee2e6;
-				background: #fff;
+				border-radius: 0.25rem;
+				padding: 0.75rem 1rem;
+				gap: 0.75rem;
+				align-items: flex-start;
 			}
 
-			.SelectableCard:focus {
-				outline: none;
-			}
-
-			.SelectableCard.is-selected {
+			.ExpeditionUnit.is-selected {
 				border-color: #0d6efd;
-				background: #f0f7ff;
+				background: #f8fbff;
 			}
 
-			.SelectableCard.is-focus {
-				outline: 2px solid #0d6efd;
-				outline-offset: 2px;
+			.ExpeditionUnit.is-off,
+			.ExpeditionUnit.is-disabled {
+				opacity: 0.45;
 			}
 
-			.SelectableCard-check {
-				display: inline-block;
-				width: 1.25rem;
-				height: 1.25rem;
-				border: 1px solid #212529;
-				position: relative;
-				flex-shrink: 0;
+			.ExpeditionUnit-body {
+				flex: 1;
+				min-width: 0;
 			}
 
-			.SelectableCard-check::after {
-				content: '';
-				position: absolute;
-				inset: 3px;
-				background: #212529;
-				transform: scale(0);
-				transition: transform 0.05s ease;
+			.ExpeditionUnit-meta {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem 1rem;
+				font-size: 0.8rem;
+				color: #6c757d;
 			}
 
-			.SelectableCard.is-selected .SelectableCard-check::after {
-				transform: scale(1);
+			.ExpeditionUnit-meta span::before {
+				font-weight: 600;
+				color: #495057;
+			}
+
+			.ExpeditionUnit-meta .meta-cr::before {
+				content: 'CR ';
+			}
+
+			.ExpeditionUnit-meta .meta-upkeep::before {
+				content: 'Upkeep ';
+			}
+
+			.ExpeditionUnit-meta .meta-freq::before {
+				content: 'Freq. ';
+			}
+
+			.ExpeditionVariants {
+				margin-left: 2.5rem;
+				padding-left: 1rem;
+				border-left: 2px solid #dee2e6;
 			}
 		</style>
-		<script type="module" crossorigin src="./assets/index-DnJmeWeo.js"></script>
+		<script type="module" crossorigin src="./assets/index-DF5Adp4-.js"></script>
 	</head>
 
 	<body>
@@ -158,10 +175,11 @@
 					<h2 class="h4 mb-3">Getting started</h2>
 					<p>
 						This package does <strong>not</strong> replace native
-						<code>&lt;input type="checkbox"&gt;</code>. Prefer the native control for
-						ordinary forms. Use this library when the UI itself is the checkbox:
-						selectable cards, dense custom layouts, or mixed-state parents that are
-						awkward to build with a styled native input alone.
+						<code>&lt;input type="checkbox"&gt;</code>. Prefer a
+						<code>&lt;label&gt;</code> + native checkbox for ordinary forms. Reach for
+						this library when checkboxes must stay in sync through <strong>JavaScript
+						orchestration</strong> — tri-state parents, conditional groups, shift
+						selection — while keeping HTML as the source of truth.
 					</p>
 					<p>
 						The plugin doesn't provide any style out of the box. Styles below are for
@@ -208,117 +226,371 @@ checkbox.init();</code></pre>
 
 			<div class="row my-5" id="when-to-use">
 				<div class="col-12">
-					<h2 class="h4 mb-3">When to use (selectable cards)</h2>
+					<h2 class="h4 mb-3">When to use (expedition roster)</h2>
 					<p>
-						Here the whole tile is the checkbox: name, lore, and frequency live
-						inside <code>role="checkbox"</code>. A native input alone would fight the
-						layout; the optional hidden input still submits with the form.
+						A <code>&lt;label&gt;</code> wrapping each row would work for simple toggles.
+						This roster cannot be solved with labels alone:
 					</p>
-					<div class="row" role="group" aria-labelledby="bestiary-label">
-						<div class="col-12 mb-2">
-							<h3 class="h6 mb-0" id="bestiary-label">City of Splendors — hirelings</h3>
+					<ul>
+						<li>
+							<strong>Recruit all</strong> must show
+							<code>aria-checked="mixed"</code> when only some squads are hired — native
+							<code>indeterminate</code> is visual-only and does not drive sibling
+							checkboxes.
+						</li>
+						<li>
+							<strong>Quaggoth patrol</strong> enables or disables an entire nested group;
+							the parent tri-state reflects how many variants are active.
+						</li>
+						<li>
+							<strong>Live counters</strong> (squads, units, upkeep vs. budget) must react to
+							every toggle — including nested variants the parent cannot know about in pure
+							HTML.
+						</li>
+					</ul>
+					<p class="small text-muted">
+						HTML declares every state; JavaScript wires the relationships via
+						<code>activate()</code>, <code>mix()</code>, and events — see log below.
+					</p>
+
+					<div class="border px-3 py-4 js-expedition">
+						<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+							<h3 class="h6 mb-0" id="expedition-label">Undermountain expedition roster</h3>
+							<span class="badge bg-secondary js-expedition-budget-badge">Budget 500 gp/day</span>
 						</div>
-						<div class="col-md-4 mb-3">
+
+						<div class="ExpeditionSummary border p-3 mb-3 bg-light js-expedition-summary">
+							<div class="row g-2">
+								<div class="col-md-3">
+									<strong>Squads</strong>
+									<div class="js-expedition-squad-count">0 / 5</div>
+								</div>
+								<div class="col-md-3">
+									<strong>Units</strong>
+									<div class="js-expedition-unit-count">0</div>
+								</div>
+								<div class="col-md-3">
+									<strong>Upkeep</strong>
+									<div class="js-expedition-upkeep">0 gp / 500 gp</div>
+								</div>
+								<div class="col-md-3">
+									<strong>Remaining</strong>
+									<div class="js-expedition-remaining">500 gp</div>
+								</div>
+							</div>
+							<div class="progress mt-2" style="height: 0.5rem">
+								<div
+									class="progress-bar js-expedition-budget-bar"
+									role="progressbar"
+									style="width: 0%"
+									aria-valuenow="0"
+									aria-valuemin="0"
+									aria-valuemax="500"
+								></div>
+							</div>
+						</div>
+
+						<div class="border mb-3">
 							<div
-								class="SelectableCard p-3 h-100 js-selectable-card"
+								class="Form__checkbox m-3 align-items-center d-flex js-expedition-select-all"
 								tabindex="0"
 								role="checkbox"
 								aria-checked="false"
-								aria-labelledby="monster-curst-title"
-								aria-describedby="monster-curst-desc monster-curst-meta"
+								aria-labelledby="expedition-select-all-label"
 							>
-								<div class="d-flex align-items-start mb-2">
-									<span
-										class="SelectableCard-check me-2"
-										aria-hidden="true"
-									></span>
-									<strong id="monster-curst-title">Curst</strong>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
+								<div>
+									<strong id="expedition-select-all-label">Recruit all squads</strong>
+									<p class="small text-muted mb-0">
+										Tri-state parent — checks every available squad below.
+									</p>
 								</div>
-								<p id="monster-curst-desc" class="small text-muted mb-2">
-									Undead cursed to walk Faerûn until their unfinished business is
-									done — or interrupted.
-								</p>
-								<p id="monster-curst-meta" class="mb-0 small fw-bold">
-									Frequency: Rare
-								</p>
+								<div class="d-none" aria-hidden="true">
+									<input name="recruit-all" value="recruit-all" type="checkbox" tabindex="-1" />
+								</div>
+							</div>
+						</div>
+
+						<div
+							class="js-expedition-squads"
+							role="group"
+							aria-labelledby="expedition-squads-label"
+						>
+							<p class="mx-3 mb-2 small fw-bold" id="expedition-squads-label">Squads</p>
+
+							<div
+								class="ExpeditionUnit Form__checkbox m-3 d-flex js-expedition-unit"
+								tabindex="0"
+								role="checkbox"
+								aria-checked="false"
+								aria-labelledby="unit-curst-title"
+								aria-describedby="unit-curst-desc unit-curst-meta"
+							>
+								<span class="Form__checkbox-box mt-1" aria-hidden="true"></span>
+								<div class="ExpeditionUnit-body">
+									<strong id="unit-curst-title">Curst</strong>
+									<p id="unit-curst-desc" class="small text-muted mb-2">
+										Undead cursed to walk Faerûn until their unfinished business is done.
+									</p>
+									<div id="unit-curst-meta" class="ExpeditionUnit-meta">
+										<span class="meta-cr">3</span>
+										<span class="meta-freq">Rare</span>
+										<span class="meta-upkeep">80 gp/day</span>
+									</div>
+								</div>
 								<div class="d-none" aria-hidden="true">
 									<input
-										name="hirelings[]"
+										name="squads[]"
 										value="Curst"
 										type="checkbox"
 										tabindex="-1"
+										data-upkeep="80"
+										data-unit="squad"
 									/>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-4 mb-3">
+
 							<div
-								class="SelectableCard p-3 h-100 js-selectable-card"
-								tabindex="0"
-								role="checkbox"
-								aria-checked="true"
-								aria-labelledby="monster-nyth-title"
-								aria-describedby="monster-nyth-desc monster-nyth-meta"
-							>
-								<div class="d-flex align-items-start mb-2">
-									<span
-										class="SelectableCard-check me-2"
-										aria-hidden="true"
-									></span>
-									<strong id="monster-nyth-title">Nyth</strong>
-								</div>
-								<p id="monster-nyth-desc" class="small text-muted mb-2">
-									A luminous sphere that feeds on magic; bright, hungry, and hard
-									to pin down in a dungeon corridor.
-								</p>
-								<p id="monster-nyth-meta" class="mb-0 small fw-bold">
-									Frequency: Very rare
-								</p>
-								<div class="d-none" aria-hidden="true">
-									<input
-										name="hirelings[]"
-										value="Nyth"
-										type="checkbox"
-										tabindex="-1"
-										checked
-									/>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 mb-3">
-							<div
-								class="SelectableCard p-3 h-100 js-selectable-card"
+								class="ExpeditionUnit Form__checkbox m-3 d-flex js-expedition-unit"
 								tabindex="0"
 								role="checkbox"
 								aria-checked="false"
-								aria-labelledby="monster-raggamoffyn-title"
-								aria-describedby="monster-raggamoffyn-desc monster-raggamoffyn-meta"
+								aria-labelledby="unit-nyth-title"
+								aria-describedby="unit-nyth-desc unit-nyth-meta"
 							>
-								<div class="d-flex align-items-start mb-2">
-									<span
-										class="SelectableCard-check me-2"
-										aria-hidden="true"
-									></span>
-									<strong id="monster-raggamoffyn-title">Raggamoffyn</strong>
+								<span class="Form__checkbox-box mt-1" aria-hidden="true"></span>
+								<div class="ExpeditionUnit-body">
+									<strong id="unit-nyth-title">Nyth</strong>
+									<p id="unit-nyth-desc" class="small text-muted mb-2">
+										Luminous sphere that feeds on magic; blinding in tight corridors.
+									</p>
+									<div id="unit-nyth-meta" class="ExpeditionUnit-meta">
+										<span class="meta-cr">5</span>
+										<span class="meta-freq">Very rare</span>
+										<span class="meta-upkeep">150 gp/day</span>
+									</div>
 								</div>
-								<p id="monster-raggamoffyn-desc" class="small text-muted mb-2">
-									Animated scraps of cloth and leather that cling to the living —
-									equal parts familiar and fashion disaster.
-								</p>
-								<p id="monster-raggamoffyn-meta" class="mb-0 small fw-bold">
-									Frequency: Rare
-								</p>
 								<div class="d-none" aria-hidden="true">
 									<input
-										name="hirelings[]"
-										value="Raggamoffyn"
+										name="squads[]"
+										value="Nyth"
 										type="checkbox"
 										tabindex="-1"
+										data-upkeep="150"
+										data-unit="squad"
+									/>
+								</div>
+							</div>
+
+							<div class="m-3">
+								<div
+									class="ExpeditionUnit Form__checkbox d-flex js-expedition-unit js-expedition-quaggoth-parent"
+									tabindex="0"
+									role="checkbox"
+									aria-checked="false"
+									aria-labelledby="quaggoth-patrol-label"
+									aria-describedby="quaggoth-patrol-desc quaggoth-patrol-meta"
+								>
+									<span class="Form__checkbox-box mt-1" aria-hidden="true"></span>
+									<div class="ExpeditionUnit-body">
+										<strong id="quaggoth-patrol-label">Quaggoth patrol</strong>
+										<p id="quaggoth-patrol-desc" class="small text-muted mb-2">
+											Underdark muscle — unlocks Worker, Slaver, and Thonot variants.
+										</p>
+										<div id="quaggoth-patrol-meta" class="ExpeditionUnit-meta">
+											<span class="meta-cr">4</span>
+											<span class="meta-freq">Uncommon</span>
+											<span class="meta-upkeep">120 gp/day base</span>
+										</div>
+									</div>
+									<div class="d-none" aria-hidden="true">
+										<input
+											name="squads[]"
+											value="Quaggoth patrol"
+											type="checkbox"
+											tabindex="-1"
+											data-upkeep="120"
+											data-unit="squad"
+										/>
+									</div>
+								</div>
+
+								<div
+									class="ExpeditionVariants js-expedition-quaggoth-variants"
+									role="group"
+									aria-labelledby="quaggoth-patrol-label"
+								>
+									<div
+										class="ExpeditionUnit Form__checkbox m-3 d-flex is-off js-expedition-variant"
+										role="checkbox"
+										aria-checked="false"
+										aria-disabled="true"
+										tabindex="-1"
+										aria-labelledby="variant-worker-title"
+										aria-describedby="variant-worker-meta"
+									>
+										<span class="Form__checkbox-box mt-1" aria-hidden="true"></span>
+										<div class="ExpeditionUnit-body">
+											<strong id="variant-worker-title">Worker</strong>
+											<div id="variant-worker-meta" class="ExpeditionUnit-meta">
+												<span class="meta-cr">2</span>
+												<span class="meta-upkeep">40 gp/day</span>
+											</div>
+										</div>
+										<div class="d-none" aria-hidden="true">
+											<input
+												name="quaggoth[]"
+												value="Worker"
+												type="checkbox"
+												tabindex="-1"
+												data-upkeep="40"
+												data-unit="variant"
+											/>
+										</div>
+									</div>
+									<div
+										class="ExpeditionUnit Form__checkbox m-3 d-flex is-off js-expedition-variant"
+										role="checkbox"
+										aria-checked="false"
+										aria-disabled="true"
+										tabindex="-1"
+										aria-labelledby="variant-slaver-title"
+										aria-describedby="variant-slaver-meta"
+									>
+										<span class="Form__checkbox-box mt-1" aria-hidden="true"></span>
+										<div class="ExpeditionUnit-body">
+											<strong id="variant-slaver-title">Slaver</strong>
+											<div id="variant-slaver-meta" class="ExpeditionUnit-meta">
+												<span class="meta-cr">3</span>
+												<span class="meta-upkeep">60 gp/day</span>
+											</div>
+										</div>
+										<div class="d-none" aria-hidden="true">
+											<input
+												name="quaggoth[]"
+												value="Slaver"
+												type="checkbox"
+												tabindex="-1"
+												data-upkeep="60"
+												data-unit="variant"
+											/>
+										</div>
+									</div>
+									<div
+										class="ExpeditionUnit Form__checkbox m-3 d-flex is-off js-expedition-variant"
+										role="checkbox"
+										aria-checked="false"
+										aria-disabled="true"
+										tabindex="-1"
+										aria-labelledby="variant-thonot-title"
+										aria-describedby="variant-thonot-meta"
+									>
+										<span class="Form__checkbox-box mt-1" aria-hidden="true"></span>
+										<div class="ExpeditionUnit-body">
+											<strong id="variant-thonot-title">Thonot</strong>
+											<div id="variant-thonot-meta" class="ExpeditionUnit-meta">
+												<span class="meta-cr">5</span>
+												<span class="meta-upkeep">100 gp/day</span>
+											</div>
+										</div>
+										<div class="d-none" aria-hidden="true">
+											<input
+												name="quaggoth[]"
+												value="Thonot"
+												type="checkbox"
+												tabindex="-1"
+												data-upkeep="100"
+												data-unit="variant"
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div
+								class="ExpeditionUnit Form__checkbox m-3 d-flex js-expedition-unit"
+								tabindex="0"
+								role="checkbox"
+								aria-checked="false"
+								aria-labelledby="unit-sewerm-title"
+								aria-describedby="unit-sewerm-desc unit-sewerm-meta"
+							>
+								<span class="Form__checkbox-box mt-1" aria-hidden="true"></span>
+								<div class="ExpeditionUnit-body">
+									<strong id="unit-sewerm-title">Sewerm</strong>
+									<p id="unit-sewerm-desc" class="small text-muted mb-2">
+										Amphibious lurker of the sewers — excellent for flooded levels.
+									</p>
+									<div id="unit-sewerm-meta" class="ExpeditionUnit-meta">
+										<span class="meta-cr">4</span>
+										<span class="meta-freq">Rare</span>
+										<span class="meta-upkeep">90 gp/day</span>
+									</div>
+								</div>
+								<div class="d-none" aria-hidden="true">
+									<input
+										name="squads[]"
+										value="Sewerm"
+										type="checkbox"
+										tabindex="-1"
+										data-upkeep="90"
+										data-unit="squad"
+									/>
+								</div>
+							</div>
+
+							<div
+								class="ExpeditionUnit Form__checkbox m-3 d-flex is-disabled js-expedition-unit"
+								tabindex="-1"
+								role="checkbox"
+								aria-checked="false"
+								aria-disabled="true"
+								aria-labelledby="unit-shadowrath-title"
+								aria-describedby="unit-shadowrath-desc unit-shadowrath-meta"
+							>
+								<span class="Form__checkbox-box mt-1" aria-hidden="true"></span>
+								<div class="ExpeditionUnit-body">
+									<strong id="unit-shadowrath-title">Shadowrath</strong>
+									<p id="unit-shadowrath-desc" class="small text-muted mb-2">
+										Already contracted elsewhere — unavailable for this expedition.
+									</p>
+									<div id="unit-shadowrath-meta" class="ExpeditionUnit-meta">
+										<span class="meta-cr">6</span>
+										<span class="meta-freq">Very rare</span>
+										<span class="meta-upkeep">200 gp/day</span>
+									</div>
+								</div>
+								<div class="d-none" aria-hidden="true">
+									<input
+										name="squads[]"
+										value="Shadowrath"
+										type="checkbox"
+										tabindex="-1"
+										data-upkeep="200"
+										data-unit="squad"
+										disabled
 									/>
 								</div>
 							</div>
 						</div>
+
+						<div class="m-3">
+							<p class="small mb-1"><strong>Event log</strong> (JS orchestration)</p>
+							<div class="EventLog border p-2 bg-light js-expedition-log"></div>
+						</div>
 					</div>
+
+					<pre class="p-3 mt-3 mb-0"><code class="language-javascript">const BUDGET = 500;
+
+const updateExpeditionSummary = () => {
+  const checked = [...document.querySelectorAll('.js-expedition input:checked')];
+  const upkeep = checked.reduce((sum, input) => sum + Number(input.dataset.upkeep), 0);
+  const squads = document.querySelectorAll('.js-expedition-unit:checked').length;
+
+  $squadCount.textContent = `${squads} / 5`;
+  $upkeep.textContent = `${upkeep} gp / ${BUDGET} gp`;
+  // …also drives tri-state parent via updateRecruitAll()
+};</code></pre>
 				</div>
 			</div>
 
