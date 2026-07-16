@@ -23,6 +23,16 @@ export default class CheckboxGroup {
 		this.initEvents();
 	}
 
+	destroy(): void {
+		this.checkboxes.forEach(checkbox => {
+			checkbox.el.removeEventListener('click', this.handleCheck);
+			checkbox.destroy();
+		});
+
+		this.checkboxes = [];
+		this.lastChecked = null;
+	}
+
 	initEvents(): void {
 		this.checkboxes.forEach(checkbox =>
 			checkbox.el.addEventListener('click', this.handleCheck, false),
@@ -40,7 +50,7 @@ export default class CheckboxGroup {
 
 		let inBetween = false;
 
-		if (shiftKey && checked) {
+		if (shiftKey && checked && this.lastChecked) {
 			this.checkboxes.forEach(checkbox => {
 				const { el } = checkbox;
 
@@ -48,7 +58,7 @@ export default class CheckboxGroup {
 					inBetween = !inBetween;
 				}
 
-				if (inBetween) {
+				if (inBetween && !checkbox.disabled) {
 					checkbox.activate();
 				}
 			});

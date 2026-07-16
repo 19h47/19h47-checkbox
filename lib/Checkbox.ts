@@ -1,12 +1,5 @@
 export type AriaChecked = 'true' | 'false' | 'mixed';
 
-export type CheckboxInputEventName =
-	| 'activate'
-	| 'deactivate'
-	| 'mix'
-	| 'input'
-	| 'change';
-
 const parseAriaChecked = (value: string | null): AriaChecked => {
 	if ('true' === value || 'mixed' === value) {
 		return value;
@@ -14,16 +7,6 @@ const parseAriaChecked = (value: string | null): AriaChecked => {
 
 	return 'false';
 };
-
-const triggerEvents = (
-	element: HTMLElement,
-	names: readonly CheckboxInputEventName[],
-): void => {
-	names.forEach(name => element.dispatchEvent(new Event(name, { bubbles: true })));
-};
-
-const setFocusClass = (target: HTMLElement): void => target.classList.add('is-focus');
-const removeFocusClass = (target: HTMLElement): void => target.classList.remove('is-focus');
 
 export default class Checkbox {
 	el: HTMLElement;
@@ -47,39 +30,38 @@ export default class Checkbox {
 
 	init(): void {
 		this.$input = this.el.querySelector<HTMLInputElement>('input');
-
-		if (!this.el.hasAttribute('aria-checked')) {
-			this.el.setAttribute('aria-checked', 'false');
-		}
-
 		this.sync();
 		this.initEvents();
 	}
 
+	destroy(): void {
+		this.el.removeEventListener('keydown', this.handleKeydown);
+		this.el.removeEventListener('click', this.handleClick);
+		this.el.removeEventListener('blur', this.handleBlur);
+		this.el.removeEventListener('focus', this.handleFocus);
+		this.el.classList.remove('is-focus');
+	}
+
 	/** Apply HTML attributes to classes and the native input. */
 	sync(): void {
-		const { ariaChecked } = this;
+		const { ariaChecked, disabled } = this;
 
 		this.el.classList.toggle('is-selected', 'true' === ariaChecked);
 		this.el.classList.toggle('is-mixed', 'mixed' === ariaChecked);
+		this.el.classList.toggle('is-disabled', disabled);
 
 		if (this.$input) {
 			this.$input.checked = 'true' === ariaChecked;
 			this.$input.indeterminate = 'mixed' === ariaChecked;
-
-			if ('true' === ariaChecked) {
-				this.$input.setAttribute('checked', '');
-			} else {
-				this.$input.removeAttribute('checked');
-			}
+			this.$input.disabled = disabled;
 		}
 	}
 
 	initEvents(): void {
 		this.el.addEventListener('keydown', this.handleKeydown);
 		this.el.addEventListener('click', this.handleClick);
-		this.el.addEventListener('blur', () => removeFocusClass(this.el));
-		this.el.addEventListener('focus', () => setFocusClass(this.el));
+		this.el.addEventListener('blur', this.handleBlur);
+		this.el.addEventListener('focus', this.handleFocus);
 	}
 
 	handleClick = (): void => {
@@ -92,8 +74,15 @@ export default class Checkbox {
 		}
 
 		event.preventDefault();
-		event.stopPropagation();
 		this.toggle();
+	};
+
+	handleFocus = (): void => {
+		this.el.classList.add('is-focus');
+	};
+
+	handleBlur = (): void => {
+		this.el.classList.remove('is-focus');
 	};
 
 	toggle(): void {
@@ -106,10 +95,6 @@ export default class Checkbox {
 		} else {
 			this.activate();
 		}
-
-		if (this.$input) {
-			triggerEvents(this.$input, ['input', 'change']);
-		}
 	}
 
 	activate(trigger: boolean = true): boolean {
@@ -119,10 +104,7 @@ export default class Checkbox {
 
 		this.el.setAttribute('aria-checked', 'true');
 		this.sync();
-
-		if (trigger && this.$input) {
-			triggerEvents(this.$input, ['activate']);
-		}
+		this.emit(trigger, 'activate');
 
 		return true;
 	}
@@ -134,10 +116,7 @@ export default class Checkbox {
 
 		this.el.setAttribute('aria-checked', 'false');
 		this.sync();
-
-		if (trigger && this.$input) {
-			triggerEvents(this.$input, ['deactivate']);
-		}
+		this.emit(trigger, 'deactivate');
 
 		return true;
 	}
@@ -149,11 +128,21 @@ export default class Checkbox {
 
 		this.el.setAttribute('aria-checked', 'mixed');
 		this.sync();
-
-		if (trigger && this.$input) {
-			triggerEvents(this.$input, ['mix']);
-		}
+		this.emit(trigger, 'mix');
 
 		return true;
+	}
+
+	private emit(trigger: boolean, name: 'activate' | 'deactivate' | 'mix'): void {
+		if (!trigger) {
+			return;
+		}
+
+		const target: HTMLElement = this.$input ?? this.el;
+		const options = { bubbles: true };
+
+		[name, 'input', 'change'].forEach(eventName => {
+			target.dispatchEvent(new Event(eventName, options));
+		});
 	}
 }

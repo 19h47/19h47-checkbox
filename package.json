@@ -1,6 +1,6 @@
 {
 	"name": "@19h47/checkbox",
-	"version": "6.1.0",
+	"version": "6.2.0",
 	"description": "Custom checkbox element with accessibility in mind",
 	"keywords": [
 		"checkbox",
@@ -34,15 +34,19 @@
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build && tsc -p tsconfig.build.json && vite build --config vite.config.docs.js",
+		"test": "vitest run",
+		"build": "vite build && tsc && vite build --config vite.config.docs.js",
 		"build:docs": "vite build --config vite.config.docs.js",
 		"deploy": "pnpm login && pnpm run build && pnpm publish --access public --no-git-checks"
 	},
 	"devDependencies": {
 		"@19h47/prettier-config": "^2.0.0",
-		"prettier": "^3.2.5",
-		"typescript": "^5.8.3",
-		"vite": "^6.2.2"
+		"happy-dom": "^20.10.6",
+		"prettier": "^3.9.5",
+		"typescript": "^7.0.2",
+		"vite": "^8.1.4",
+		"vitest": "^4.1.10"
 	},
-	"packageManager": "pnpm@10.12.1"
+	"packageManager": "pnpm@10.12.1",
+	"prettier": "@19h47/prettier-config"
 }

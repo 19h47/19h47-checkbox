@@ -8,26 +8,28 @@
 		<link rel="icon" type="image/png" href="check-box-with-check.png" />
 		<link
 			rel="stylesheet"
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
 			crossorigin="anonymous"
 		/>
 		<link
 			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css"
-			integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ=="
+			href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css"
+			integrity="sha384-rCCjoCPCsizaAAYVoz1Q0CmCTvnctK0JkfCSjx7IIxexTBg+uCKtFYycedUjMyA2"
 			crossorigin="anonymous"
 		/>
 
 		<style>
-			.Form__checkbox button {
+			.Form__checkbox-box {
+				display: inline-block;
+				flex-shrink: 0;
 				width: 1.5em;
 				height: 1.5em;
 				position: relative;
 				border: 1px solid black;
 			}
 
-			.Form__checkbox button::after {
+			.Form__checkbox-box::after {
 				display: block;
 				position: absolute;
 				top: 0;
@@ -40,24 +42,29 @@
 				transition: 0.05s transform ease;
 			}
 
-			.Form__checkbox.is-selected button:after {
+			.Form__checkbox.is-selected .Form__checkbox-box::after {
 				background-color: black;
 				transform: scale(1);
 			}
 
-			.Form__checkbox.is-mixed button:after {
+			.Form__checkbox.is-mixed .Form__checkbox-box::after {
 				background-color: black;
 				transform: scale(0.5);
 			}
 
-			.Form__checkbox.is-focus button {
-				outline: 2px solid #007bff;
+			.Form__checkbox.is-focus {
+				outline: 2px solid #0d6efd;
 				outline-offset: 2px;
 			}
 
+			.Form__checkbox:focus {
+				outline: none;
+			}
+
 			.Form__checkbox.is-off,
+			.Form__checkbox.is-disabled,
 			.Form__checkbox[disabled],
-			.Form__checkbox[aria-disabled] {
+			.Form__checkbox[aria-disabled='true'] {
 				opacity: 0.3;
 				pointer-events: none;
 			}
@@ -81,8 +88,50 @@
 				right: 0;
 				z-index: 10;
 			}
+
+			.SelectableCard {
+				cursor: pointer;
+				border: 1px solid #dee2e6;
+				background: #fff;
+			}
+
+			.SelectableCard:focus {
+				outline: none;
+			}
+
+			.SelectableCard.is-selected {
+				border-color: #0d6efd;
+				background: #f0f7ff;
+			}
+
+			.SelectableCard.is-focus {
+				outline: 2px solid #0d6efd;
+				outline-offset: 2px;
+			}
+
+			.SelectableCard-check {
+				display: inline-block;
+				width: 1.25rem;
+				height: 1.25rem;
+				border: 1px solid #212529;
+				position: relative;
+				flex-shrink: 0;
+			}
+
+			.SelectableCard-check::after {
+				content: '';
+				position: absolute;
+				inset: 3px;
+				background: #212529;
+				transform: scale(0);
+				transition: transform 0.05s ease;
+			}
+
+			.SelectableCard.is-selected .SelectableCard-check::after {
+				transform: scale(1);
+			}
 		</style>
-		<script type="module" crossorigin src="./assets/index-yHoYURoM.js"></script>
+		<script type="module" crossorigin src="./assets/index-DnJmeWeo.js"></script>
 	</head>
 
 	<body>
@@ -96,6 +145,7 @@
 					</h1>
 					<nav class="small">
 						<a href="#html-states">HTML states</a> ·
+						<a href="#when-to-use">When to use</a> ·
 						<a href="#api">API</a> ·
 						<a href="#keyboard">Keyboard</a> ·
 						<a href="#sandwich-condiments">Group</a> ·
@@ -106,6 +156,13 @@
 			<div class="row my-5">
 				<div class="col-12">
 					<h2 class="h4 mb-3">Getting started</h2>
+					<p>
+						This package does <strong>not</strong> replace native
+						<code>&lt;input type="checkbox"&gt;</code>. Prefer the native control for
+						ordinary forms. Use this library when the UI itself is the checkbox:
+						selectable cards, dense custom layouts, or mixed-state parents that are
+						awkward to build with a styled native input alone.
+					</p>
 					<p>
 						The plugin doesn't provide any style out of the box. Styles below are for
 						demo purposes only (<a
@@ -133,7 +190,7 @@
 					<pre
 						class="p-3 mt-0 mb-3"
 					><code class="language-html">&lt;div role=&quot;checkbox&quot; aria-checked=&quot;false&quot; tabindex=&quot;0&quot;&gt;
-	&lt;button type=&quot;button&quot; tabindex=&quot;-1&quot;&gt;&lt;/button&gt;
+	&lt;span class=&quot;Form__checkbox-box&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
 	Label text
 	&lt;div style=&quot;display: none;&quot;&gt;
 		&lt;input name=&quot;option&quot; value=&quot;option&quot; type=&quot;checkbox&quot; /&gt;
@@ -146,6 +203,122 @@
 const checkbox = new Checkbox(document.querySelector('[role="checkbox"]'));
 
 checkbox.init();</code></pre>
+				</div>
+			</div>
+
+			<div class="row my-5" id="when-to-use">
+				<div class="col-12">
+					<h2 class="h4 mb-3">When to use (selectable cards)</h2>
+					<p>
+						Here the whole tile is the checkbox: name, lore, and frequency live
+						inside <code>role="checkbox"</code>. A native input alone would fight the
+						layout; the optional hidden input still submits with the form.
+					</p>
+					<div class="row" role="group" aria-labelledby="bestiary-label">
+						<div class="col-12 mb-2">
+							<h3 class="h6 mb-0" id="bestiary-label">City of Splendors — hirelings</h3>
+						</div>
+						<div class="col-md-4 mb-3">
+							<div
+								class="SelectableCard p-3 h-100 js-selectable-card"
+								tabindex="0"
+								role="checkbox"
+								aria-checked="false"
+								aria-labelledby="monster-curst-title"
+								aria-describedby="monster-curst-desc monster-curst-meta"
+							>
+								<div class="d-flex align-items-start mb-2">
+									<span
+										class="SelectableCard-check me-2"
+										aria-hidden="true"
+									></span>
+									<strong id="monster-curst-title">Curst</strong>
+								</div>
+								<p id="monster-curst-desc" class="small text-muted mb-2">
+									Undead cursed to walk Faerûn until their unfinished business is
+									done — or interrupted.
+								</p>
+								<p id="monster-curst-meta" class="mb-0 small fw-bold">
+									Frequency: Rare
+								</p>
+								<div class="d-none" aria-hidden="true">
+									<input
+										name="hirelings[]"
+										value="Curst"
+										type="checkbox"
+										tabindex="-1"
+									/>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 mb-3">
+							<div
+								class="SelectableCard p-3 h-100 js-selectable-card"
+								tabindex="0"
+								role="checkbox"
+								aria-checked="true"
+								aria-labelledby="monster-nyth-title"
+								aria-describedby="monster-nyth-desc monster-nyth-meta"
+							>
+								<div class="d-flex align-items-start mb-2">
+									<span
+										class="SelectableCard-check me-2"
+										aria-hidden="true"
+									></span>
+									<strong id="monster-nyth-title">Nyth</strong>
+								</div>
+								<p id="monster-nyth-desc" class="small text-muted mb-2">
+									A luminous sphere that feeds on magic; bright, hungry, and hard
+									to pin down in a dungeon corridor.
+								</p>
+								<p id="monster-nyth-meta" class="mb-0 small fw-bold">
+									Frequency: Very rare
+								</p>
+								<div class="d-none" aria-hidden="true">
+									<input
+										name="hirelings[]"
+										value="Nyth"
+										type="checkbox"
+										tabindex="-1"
+										checked
+									/>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 mb-3">
+							<div
+								class="SelectableCard p-3 h-100 js-selectable-card"
+								tabindex="0"
+								role="checkbox"
+								aria-checked="false"
+								aria-labelledby="monster-raggamoffyn-title"
+								aria-describedby="monster-raggamoffyn-desc monster-raggamoffyn-meta"
+							>
+								<div class="d-flex align-items-start mb-2">
+									<span
+										class="SelectableCard-check me-2"
+										aria-hidden="true"
+									></span>
+									<strong id="monster-raggamoffyn-title">Raggamoffyn</strong>
+								</div>
+								<p id="monster-raggamoffyn-desc" class="small text-muted mb-2">
+									Animated scraps of cloth and leather that cling to the living —
+									equal parts familiar and fashion disaster.
+								</p>
+								<p id="monster-raggamoffyn-meta" class="mb-0 small fw-bold">
+									Frequency: Rare
+								</p>
+								<div class="d-none" aria-hidden="true">
+									<input
+										name="hirelings[]"
+										value="Raggamoffyn"
+										type="checkbox"
+										tabindex="-1"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -164,7 +337,7 @@ checkbox.init();</code></pre>
 							role="checkbox"
 							aria-checked="false"
 						>
-							<button class="mr-3" type="button" tabindex="-1"></button>
+							<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 							<code>aria-checked="false"</code>
 							<div class="d-none">
 								<input name="state-false" value="false" type="checkbox" />
@@ -176,7 +349,7 @@ checkbox.init();</code></pre>
 							role="checkbox"
 							aria-checked="true"
 						>
-							<button class="mr-3" type="button" tabindex="-1"></button>
+							<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 							<code>aria-checked="true"</code>
 							<div class="d-none">
 								<input name="state-true" value="true" type="checkbox" checked />
@@ -188,7 +361,7 @@ checkbox.init();</code></pre>
 							role="checkbox"
 							aria-checked="mixed"
 						>
-							<button class="mr-3" type="button" tabindex="-1"></button>
+							<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 							<code>aria-checked="mixed"</code>
 							<div class="d-none">
 								<input name="state-mixed" value="mixed" type="checkbox" />
@@ -201,7 +374,7 @@ checkbox.init();</code></pre>
 							aria-disabled="true"
 							tabindex="-1"
 						>
-							<button class="mr-3" type="button" tabindex="-1"></button>
+							<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 							<code>aria-disabled="true"</code>
 							<div class="d-none">
 								<input name="state-disabled" value="disabled" type="checkbox" />
@@ -214,7 +387,7 @@ checkbox.init();</code></pre>
 							aria-checked="false"
 							aria-label="Subscribe to the newsletter"
 						>
-							<button class="mr-3" type="button" tabindex="-1"></button>
+							<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 							<code>aria-label</code> (no visible label text)
 							<div class="d-none">
 								<input
@@ -236,7 +409,7 @@ checkbox.init();</code></pre>
 								aria-labelledby="terms-label"
 								aria-describedby="terms-desc"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								<span id="terms-label">Terms of service</span>
 								<div class="d-none">
 									<input name="state-terms" value="terms" type="checkbox" />
@@ -257,9 +430,10 @@ checkbox.init();</code></pre>
 					<p>
 						<code>activate()</code>, <code>deactivate()</code> and
 						<code>mix()</code> write to the HTML. Pass <code>false</code> to skip
-						custom events (<code>activate</code>, <code>deactivate</code>,
-						<code>mix</code>). User interaction also fires native
-						<code>input</code> and <code>change</code> on the hidden input.
+						events (<code>activate</code> / <code>deactivate</code> /
+						<code>mix</code>, plus <code>input</code> and <code>change</code>).
+						Events target the hidden input when present, otherwise the checkbox
+						element.
 					</p>
 					<div class="border px-3 py-4">
 						<div
@@ -268,7 +442,7 @@ checkbox.init();</code></pre>
 							role="checkbox"
 							aria-checked="false"
 						>
-							<button class="mr-3" type="button" tabindex="-1"></button>
+							<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 							API playground
 							<div class="d-none">
 								<input
@@ -346,8 +520,10 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 						</tbody>
 					</table>
 					<p class="small text-muted mb-0">
-						Focus adds the <code>is-focus</code> class (styled above). Disabled
-						checkboxes ignore click and Space.
+						Focus adds the <code>is-focus</code> class (styled above).
+						<code>sync()</code> mirrors <code>aria-disabled</code> to
+						<code>is-disabled</code> and the native input. Disabled checkboxes
+						ignore click and Space.
 					</p>
 				</div>
 			</div>
@@ -375,7 +551,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>Lettuce
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>Lettuce
 								<div class="d-none">
 									<input
 										id="lettuce"
@@ -394,7 +570,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 									aria-checked="false"
 									id="tomato"
 								>
-									<button class="mr-3" type="button" tabindex="-1"></button>Tomato
+									<span class="Form__checkbox-box me-3" aria-hidden="true"></span>Tomato
 									<div class="d-none">
 										<input
 											id="tomato-input"
@@ -417,7 +593,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 										aria-disabled="true"
 										tabindex="-1"
 									>
-										<button class="mr-3" type="button" tabindex="-1"></button>Roma
+										<span class="Form__checkbox-box me-3" aria-hidden="true"></span>Roma
 										<div class="d-none">
 											<input id="roma" name="roma" value="Roma" type="checkbox" />
 										</div>
@@ -430,8 +606,8 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 										aria-disabled="true"
 										tabindex="-1"
 									>
-										<button class="mr-3" type="button" tabindex="-1"></button
-										>Monterosa
+										<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
+										Monterosa
 										<div class="d-none">
 											<input
 												id="monterosa"
@@ -449,8 +625,8 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 										aria-disabled="true"
 										tabindex="-1"
 									>
-										<button class="mr-3" type="button" tabindex="-1"></button
-										>Beefsteak
+										<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
+										Beefsteak
 										<div class="d-none">
 											<input
 												id="beefsteak"
@@ -469,12 +645,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 								role="checkbox"
 								aria-checked="true"
 							>
-								<button
-									class="mr-3 is-selected"
-									type="button"
-									tabindex="-1"
-								></button
-								>Mustard
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>Mustard
 								<div class="d-none">
 									<input
 										id="mustard"
@@ -492,7 +663,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								<div>Sprouts</div>
 								<div class="d-none">
 									<input
@@ -512,7 +683,7 @@ checkbox.$input.addEventListener('change', …);</code></pre>
 								tabindex="-1"
 								disabled
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								<div>Disabled</div>
 								<div class="d-none">
 									<input
@@ -555,7 +726,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Select All
 								<div class="d-none">
 									<input
@@ -579,7 +750,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Curst
 								<div class="d-none">
 									<input id="curst" name="curst" value="Curst" type="checkbox" />
@@ -592,7 +763,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Doppelganger, Greater
 								<div class="d-none">
 									<input
@@ -610,7 +781,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Duhlarkin
 								<div class="d-none">
 									<input
@@ -627,7 +798,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Ghaunadan
 								<div class="d-none">
 									<input
@@ -645,7 +816,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Gulguthydra
 								<div class="d-none">
 									<input
@@ -663,7 +834,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Hakeashar
 								<div class="d-none">
 									<input
@@ -681,7 +852,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Leucrotta, Greater
 								<div class="d-none">
 									<input
@@ -698,7 +869,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>Nyth
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>Nyth
 								<div class="d-none">
 									<input
 										id="nyth"
@@ -715,7 +886,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Palimpsest
 								<div class="d-none">
 									<input
@@ -733,7 +904,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Peltast
 								<div class="d-none">
 									<input
@@ -750,7 +921,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Raggamoffyn
 								<div class="d-none">
 									<input
@@ -768,7 +939,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Sewerm
 								<div class="d-none">
 									<input
@@ -782,12 +953,12 @@ checkboxgroup.init();
 
 							<div
 								class="Form__checkbox m-3 align-items-center d-flex"
-								tabindex="0"
+								tabindex="-1"
 								role="checkbox"
 								aria-checked="false"
 								aria-disabled="true"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Shadowrath
 								<div class="d-none">
 									<input
@@ -806,7 +977,7 @@ checkboxgroup.init();
 								role="checkbox"
 								aria-checked="false"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Watchspider
 								<div class="d-none">
 									<input
@@ -820,12 +991,12 @@ checkboxgroup.init();
 
 							<div
 								class="Form__checkbox mx-3 mt-3 align-items-center d-flex"
-								tabindex="0"
+								tabindex="-1"
 								role="checkbox"
 								aria-checked="false"
 								aria-disabled="true"
 							>
-								<button class="mr-3" type="button" tabindex="-1"></button>
+								<span class="Form__checkbox-box me-3" aria-hidden="true"></span>
 								Wereshark
 								<div class="d-none">
 									<input
@@ -843,7 +1014,15 @@ checkboxgroup.init();
 			</div>
 		</div>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"
+			integrity="sha384-xAgN7OCsK5s0d3G18tqRYrxy8hWsPA14E26TMh7Mi9ZM09vaz4EA0DBTl+80F5yC"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/autoloader/prism-autoloader.min.js"
+			integrity="sha384-Uq05+JLko69eOiPr39ta9bh7kld5PKZoU+fF7g0EXTAriEollhZ+DrN8Q/Oi8J2Q"
+			crossorigin="anonymous"
+		></script>
 	</body>
 </html>
