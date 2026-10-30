@@ -41,7 +41,7 @@
 	},
 	"devDependencies": {
 		"@19h47/prettier-config": "^2.0.0",
-		"happy-dom": "^20.10.6",
+		"happy-dom": "^21.0.4",
 		"prettier": "^3.9.5",
 		"typescript": "^7.0.2",
 		"vite": "^8.1.4",
